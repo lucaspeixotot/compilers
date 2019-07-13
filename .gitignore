@@ -1,1 +1,7 @@
 tags
+*.log
+*.idx
+*.lof
+*.aux
+*.out
+*.toc

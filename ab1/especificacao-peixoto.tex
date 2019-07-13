@@ -1,0 +1,543 @@
+\documentclass[
+  % -- opções da classe memoir --
+  12pt,				% tamanho da fonte
+  % openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+  oneside,			% para impressão somente frente. Oposto a twoside (frente e verso)
+  a4paper,			% tamanho do papel. 
+  % -- opções da classe abntex2 --
+  %chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+  %section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+  %subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+  %subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+  % -- opções do pacote babel --
+  english,			% idioma adicional para hifenização
+  french,				% idioma adicional para hifenização
+  spanish,			% idioma adicional para hifenização
+  brazil,				% o último idioma é o principal do documento
+]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{float}
+
+% ---
+
+% ---
+% Pacotes adicionais, usados no anexo do modelo de folha de identificação
+% ---
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{hyperref}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{codered}{rgb}{0.960,0,0.054}
+\definecolor{codeblue}{rgb}{0, 0.141, 0.960}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{codepurple},
+    stringstyle=\color{codemagenta},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=mystyle}
+\lstset{
+  morekeywords={defun, int, defint, echo, return, deffloat, defbool,
+    defchar, if, else}
+}
+\renewcommand{\lstlistingname}{Código}% Listing -> Algorithm
+% ---
+	
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+  \ifcase #1 %
+  Nenhuma citação no texto.%
+  \or
+  Citado na página #2.%
+  \else
+  Citado #1 vezes nas páginas #2.%
+  \fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Especificação da linguagem de programação LisC}
+\autor{Lucas Peixoto de Almeida Cavalcante}
+\local{Brasil}
+\data{Maceió/Al\\Julho de 2019}
+\instituicao{%
+  Universidade Federal de Alagoas
+  \par
+  Instituto de Computação
+}
+\tipotrabalho{Relatório técnico}
+\preambulo{Especificação da linguagem de programação LisC, definida
+  pelo aluno, para a disciplina de Compiladores, correspondente à
+  parte da avaliação da AB1 do semestre de 2019.2, sob orientação do
+  \textbf{Prof. Alcino Dall Igna Jr.}}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+  %pagebackref=true,
+  pdftitle={\@title}, 
+  pdfauthor={\@author},
+  pdfsubject={\imprimirpreambulo},
+  pdfcreator={LaTeX with abnTeX2},
+  pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
+  colorlinks=true,       		% false: boxed links; true: colored links
+  linkcolor=blue,          	% color of internal links
+  citecolor=blue,        		% color of links to bibliography
+  filecolor=magenta,      		% color of file links
+  urlcolor=blue,
+  bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% inserir o sumario
+% ---
+
+\tableofcontents*
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS  (necessário para incluir número nas páginas)
+% ----------------------------------------------------------
+\textual
+\chapter{Introdução}
+\label{cha:intro}
+Esse documento tem como objetivo especificar as características da
+linguagem de programação LisC. Ao longo dos capítulos subsequentes
+entenderemos as particularidades dessa linguagem no que diz respeito
+ao escopo dela, aos nomes, tipos e estrutura de dados, atribuições,
+expressões e mais.
+
+A especificação dessa linguagem servirá de base para a implementação
+dos analisadore léxico e sintático, que serão desenvolvidas
+posteriormente no decorrer da disciplina. Ambos os analisadores serão
+implementados na linguagem de programação C. Ao fim deste documento
+também existirá uma seção reservada para a especificação dos tokens da
+linguagem.
+
+
+\chapter{Estrutura do programa}
+\label{cha:estrutura-do-programa}
+Esse capítulo tem como objetivo especificar como se da a estrutura
+geral de um programa em LisC. O início de um programa em LisC ocorre
+com a definição de uma função chamada \textbf{begin}, que retorna um
+\emph{inteiro}. Sem essa função a compilação do programa da erro. Um
+exemplo de código de uma função \textbf{begin} pode ser visto no
+\textbf{código \ref{code:begin}}.
+Em LisC temos que as funções só podem ser declaradas e definidas num
+escopo global, ou seja, não é permitido que uma função seja criada
+dentro de outra função. Note que nesse exemplo de código podemos
+observar que os blocos da linguagem são delimitados com a presença
+de chaves(\{\}).
+
+\begin{lstlisting}[label={code:begin},caption=Código
+    exemplo de uma função begin.]
+  defun start ()(int) {
+    defint a 5;
+    echo "a = %d" (a);
+    return 0;
+  }
+\end{lstlisting}
+
+A presença de abre e fecha chaves define a presença de um
+novo escopo dentro da linguagem, variáveis que são criadas dentro
+desse escopo são consideradas variáveis locais, já as variáveis
+criadas fora de um escopo são chamadas de variáveis globais. As
+variáveis globais são visíveis dentro de qualquer escopo, já as locais
+só são vistas dentro do escopo ao qual ela foi criada, além disso a
+linguagem admite \textbf{mascaramento} de variáveis. Parâmetros de
+funções tem como escopo todo o bloco da função.
+
+Também no código \ref{code:begin} podemos ver o primeiro exemplo
+da criação de uma variável. A variável criada foi uma variável do
+tipo inteiro. A declaração de uma variável se dá a partir da junção da
+palavra \textbf{def} com o tipo da variável em questão, como nesse
+caso
+tivemos uma variável inteira, a definiçao da mesma foi feita
+utilizando
+a palavra reservada \textbf{defint}. Note que a vinculação de tipos de
+dados às variáveis é estática, sendo assim o tipo é definido
+explicitamente pelo programador no momento da declaração da variável.
+
+Toda instrução da linguagem LisC deve ser terminada com o caractere
+\textbf{";"}. E os comentários da linguagem são apenas comentários de
+linha e são feitos a partir dos caracteres \textbf{"//"}. As
+instruções da linguagem devem estar dentro de escopos de funções. No
+escopo global só é permitido a declaração ou definição de funções e
+variáveis.
+
+\chapter{Identificadores}
+\label{cha:identificadores}
+Os identificadores em LisC são declarados como na maioria das outras linguagens,
+iniciando com uma letra e seguido ou não de uma ou mais letras e
+dígitos. Em LisC os identificadores também são sensíveis à capitalização, além
+de não possuir limite de caracteres. A definição de letra e dígito
+pode ser dada como segue:
+
+\begin{description}
+\item [Letra]:pertence ao conjunto de caracteres $[A-Z]\cup[a-z]$
+\item [Dígito]:pertence ao conjunto de caracteres $[0-9]$
+\end{description}
+
+Dessa forma temos que os identificadores em LisC podem ser representados pelo
+autômato cuja expressão regular é dada por
+\textbf{\lstinline[]{[A-Za-z]([A-Za-z]|[0-9])*}}. Note que os
+identificadores não podem fazer parte do conjunto das palavras
+reservadas da linguagem. No \textbf{capítulo}
+\ref{cha:palavras-reservadas} vamos saber quais são as palavras
+reservadas da linguagem.
+
+\chapter{Palavras-reservadas}
+\label{cha:palavras-reservadas}
+As palavras reservadas da linguagem podem ser vistas na tabela
+\ref{tab:palavras-reservadas}.
+
+\begin{table}[H]
+  \centering
+  \caption{Tabela contendo todas as palavras reservadas da linguagem.}
+  \label{tab:palavras-reservadas}
+  \begin{tabular}{|l|l|l|l|l|}
+    \hline
+    defun & defint & defchar & deffloat & defbool \\ \hline
+    if&  else& int &  for& while \\ \hline
+    echo&  return&  break&  continue& nil \\ \hline
+    true&  false& char& float & bool\\ \hline
+  \end{tabular}
+\end{table}
+
+\chapter{Tipos de dados}
+\label{cha:tipos-de-dados}
+
+A linguagem LisC possui os seguintes tipos de dados: inteiro, ponto
+flutuante, caractere e booleano. E possui as seguintes estruturas de
+dados: cadeia de caracteres e arranjos unidimensionais. No capítulo
+\ref{cha:atribuicoes-expressoes-operadores} veremos com mais detalhes
+como atribuir valor as variáveis que serão vistas nesse capítulo, o
+que envolve os tipos de operação.
+
+\section{Tipos de dados primitivos}
+\label{sec:tipos-de-dados-primitivos}
+
+Nessa seção iremos falar a respeito de cada um dos quatro tipos de
+dados primitivos existentes.
+
+\subsection{Inteiro}
+\label{subsec:inteiro}
+As variáveis do tipo inteiro representam os números inteiros. Podemos
+ver no \textbf{código} \ref{code:int} como é feita a declaração de uma
+variável desse tipo. A palavra reservada que representa esse tipo de
+variável é a palavra \textbf{int}.
+
+\begin{lstlisting}[label=code:int,caption=Declaração de uma variável inteira]
+  defint <nome>;
+\end{lstlisting}
+
+
+As constantes literais de uma variável inteira estão contidas no
+intervalo de
+\\
+\{-2.147.483.648, +2.147.483.647\}. Temos como exemplo
+os seguintes valores: [-2, -40, 0, 55, 12].
+
+\subsection{Ponto flutuante}
+\label{subsec:ponto-flutuante}
+As variáveis do tipo ponto flutuante representam os números
+reais. Podemos ver no \textbf{código} \ref{code:float} como
+é feita a declaração de uma variável desse tipo. A palavra reservada
+que representa esse tipo de variável é a palavra \textbf{float}.
+
+\begin{lstlisting}[label=code:float,caption=Declaração de uma variável
+  tipo ponto flutuante.]
+  deffloat <nome>;
+\end{lstlisting}
+
+As constantes literais de uma variável float estão contidas no
+intervalo de
+\\
+\{-3.4e+38, 3.4e+38\}. Temos como exemplo
+os seguintes valores: [-2.2, -40.5, 0, 55.0, 12.1].
+
+\subsection{Booleano}
+\label{subsec:booleano}
+p
+As variáveis do tipo booleano representam apenas dois
+valores: verdadeiro ou falso. Podemos ver no \textbf{código}
+\ref{code:booleano} como é feita a declaração de uma variável desse
+tipo. A palavra reservada que representa esse tipo de variável é a palavra \textbf{bool}.
+
+\begin{lstlisting}[label=code:booleano,caption=Declaração de uma variável booleana]
+  defbool <nome>;
+\end{lstlisting}
+
+
+As contantes literais booleanas podem ser somente: \textbf{true} ou
+\textbf{false}. Desse modo não existe um intervalo associado a esse
+tipo de variável. Em LisC qualquer valor diferente de zero é
+considerado verdadeiro e qualquer valor igual a zero é considerado
+falso.
+
+\subsection{Caractere}
+\label{subsec:caractere}
+
+As variáveis do tipo caractere representam os caracteres
+alfanuméricos da tabela \textbf{ASCII}. Podemos ver no \textbf{código}
+\ref{code:char} como é feita a declaração de uma variável desse
+tipo. A palavra reservada que representa esse tipo de variável é a palavra \textbf{char}.
+
+\begin{lstlisting}[label=code:char,caption=Declaração de uma variável caractere]
+  defchar <nome>;
+\end{lstlisting}
+
+As contantes literais do tipo de variável caractere estão contidas no
+pintervalo de [0, 127]. Temos como exemplo os seguintes valores: "a",
+"b", "c".
+
+\section{Estrutura de dados}
+\label{sec:estrutura-de-dados}
+
+Essa seção irá tratar dos tipos de dados que representam estruturas de
+dados dentro da linguagem.
+
+\subsection{Arranjos unidimensionais}
+\label{subsec:arranjos-unidimensionais}
+
+As variáveis do tipo arranjos unidimensionais podem ser de qualquer um
+dos tipos primitivos já apresentados na \textbf{seção}
+\ref{sec:tipos-de-dados-primitivos}. Esse tipo de variável é muito
+utilizada para guardar uma quantidade de elementos de uma variável do mesmo
+tipo. Note que a declaração é basicamente a mesma da declaração das
+variáveis primitivas, a única diferença é a existência de colchetes
+para definir qual será a quantidade exata dos elementos a serem
+guardados. Perceba, portanto, que a quantidade de elementos é estática
+e definida em tempo de compilação, de modo que o tamanho não pode ser
+alterado após ter sido declarada e/ou definida. Temos no
+\textbf{código} \ref{code:arranjos-unidimensionais} um exemplo da
+declaração desse tipo de variável para cada um dos tipos primitivos.
+
+\begin{lstlisting}[label=code:arranjos-unidimensionais,caption=Declaração
+    de uma variável do tipo arranjo unidimensional.]
+  defint numeros[5];
+  defchar letras[10];
+  defbool binarios[15];
+  deffloat taxas[4];
+\end{lstlisting}
+
+As constantes literais desse tipo de variável não possuem um intervalo
+de valores, visto que esse tipo de análise não faz muito
+sentido. Exemplos desse tipo de variável podem ser: [1,2,3],
+[true,false,true,false], [2.3, 1.6, -1.2].
+
+O limite inferior de um arranjo unidimensional é 0, e o limite
+superior é dado pelo tamanho - 1. Desse modo, o acesso a um elemento
+específico dentro do arranjo pode ser feito a partir do
+\textbf{código} \ref{code:acesso}.
+
+\begin{lstlisting}[label=code:acesso,caption=Acessando elemento dentro
+    de um arranjo unidimensional]
+  defint numeros[5] {1,2,3,4,5}
+  echo "acessando indice %d do arranjo numeros, valor: %d" (2, numeros[1]) 
+\end{lstlisting}
+
+
+\subsection{Cadeia de caractere}
+\label{subsec:cadeia-de-caractere}
+
+As variáveis do tipo cadeia de caractere são basicamente um arranjo
+unidimensional de uma variável primitiva do tipo \emph{char}. Esse
+tipo de estrutura também é conhecido como \emph{string}. Temos no
+\textbf{código} \ref{code:string} um exemplo da declaração de uma
+variável do tipo cadeia de caractere com o tamanho definido e outra
+com o tamanho sendo calculado a partir do valor associado a variável
+no momento da definição.
+
+\begin{lstlisting}[label=code:string,caption=Declaração de variáveis
+    do tipo cadeia de caractere.]
+  defchar palavra[10];
+  defchar texto[] = "Saudosa maloca";
+\end{lstlisting}
+
+Note que na variável \textbf{texto} o tamanho alocado para ela foi de
+15 caracteres, sendo 14 para o texto em sí(\textbf{Saudosa maloca}) e
+mais um para marcar o fim da string, que seria o caracter "\textbackslash0". Para
+strings, o caracter considerado nulo é o caracter "\textbackslash0" e geralmente
+nas linguagens é utilizado para marcar o fim de uma string.
+
+As formas de acesso a caracteres específicos de uma cadeia de
+caracteres é feito da mesma que em arranjos unidimensionais.
+
+
+\section{Equivalência de tipos}
+\label{sec:equivalencia-de-tipos}
+
+\subsection{Coerções admitidas}
+\label{subsec:coercoes-admitidas}
+
+Os tipos de coerções admitidas na linguagem de programação LisC são
+relacionadas apenas as variáveis do tipo primitiva. As coerções
+possíveis podem ser visualizadas na \textbf{tabela}
+\ref{tab:coercoes}. A linguagem não tem nenhuma forma explícita de
+conversão de tipos.
+
+\begin{table}[H]
+  \centering
+  \caption{Coerções admitidas em LisC}
+  \label{tab:coercoes}
+  \begin{tabular}{|l|l|}
+    \hline
+    De & Para \\ \hline
+    Inteiro & String, Ponto flutuante, Caracter, Booleano \\ 
+    Ponto flutuante & String, Inteiro \\     
+    Booleano & String \\ 
+    Caracter & String \\     \hline
+  \end{tabular}
+\end{table}
+
+\subsection{Verificação de tipo}
+\label{subsec:verificacao-de-tipo}
+
+Para garantir que os tipos em LisC sejam respeitados, é feita uma
+verificação em tempo de compilação. Essa verificação é feita tanto em
+operações entre variáveis, para garantir que os tipos são compatíveis,
+como na verificação dos tipos de parâmetros de funçoes.
+
+\subsection{Tipagem}
+\label{subsec:tipagem}
+
+A linguagem LisC é fortemente tipada.
+
+\section{Constantes com nome}
+\label{sec:constantes-com-nome}
+
+A linguagem LisC não admite constantes com nomes.
+
+
+
+
+
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\printindex
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

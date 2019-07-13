@@ -6,11 +6,12 @@
  * @date 2019-06-11
  */
 
-#include <errno.h>
 #include <stdio.h>
-#include <parser.h>
-#include <lexical.h>
-#include <globals.h>
+
+#include "errno.h"
+#include "parser.h"
+#include "lexical.h"
+#include "globals.h"
 
 // #TODO: finalizar struct, enums e implementar o módulo do analisador 
 //        léxico.
