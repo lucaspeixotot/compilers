@@ -72,7 +72,7 @@
 \lstset{style=mystyle}
 \lstset{
   morekeywords={defun, int, defint, echo, return, deffloat, defbool,
-    defchar, if, else}
+    defchar, if, else, set}
 }
 \renewcommand{\lstlistingname}{Código}% Listing -> Algorithm
 % ---
@@ -516,6 +516,128 @@ A linguagem LisC é fortemente tipada.
 \label{sec:constantes-com-nome}
 
 A linguagem LisC não admite constantes com nomes.
+
+\chapter{Atribuições e expressões}
+\label{cha:atribuicoes-e-expressoes}
+
+Nesse capítulo iremos tratar a respeito das atribuições e das
+expressões presentes em LisC. Será visto como que as atribuições são
+feitas e entenderemos um pouco melhor os tipos de expressões presentes
+na linguagem, sua precedência, quais tipos de variáveis estão
+associados a operação e etc. Primeiro falaremos sobre as atribuições
+na \textbf{seção} \ref{sec:atribuicoes} e em seguida veremos a respeito das
+expressões na \textbf{seção} \ref{sec:expressoes}.
+
+\section{Atribuições}
+\label{sec:atribuicoes}
+
+As atribuições são responsáveis por associar algum valor a uma
+variável. No \textbf{código} \ref{code:atribuicoes} podemos ver alguns
+exemplos de atribuições em LisC.
+
+\begin{lstlisting}[label=code:atribuicoes,caption=Exemplos de
+  atribuições.]
+  defint age 15;
+  set age ((age + 15) - 20);
+  deffloat lado, area_quadrado, area_triangulo;
+  set lado (5);
+  set area_quadrado (lado * lado);
+  set area_triangulo (area_quadrado - 1);
+  defbool x (area_quadrado > area_triangulo);
+  defbool res (!x);
+\end{lstlisting}
+
+Note que nesses exemplos as atribuições foram feitas de várias
+formas. No momento da declaração de uma variável é possível definir de
+imediato um valor inicial. Após a definição da variável, qualquer
+atribuição é feita a partir da palavra reservada \emph{set}. Note que
+a expressão que será atribuída a variável deve estar entre parênteses.
+
+Uma variável pode ter seu valor alterado a partir de uma constante
+literal, de uma expressão aritmética, relacional ou lógica, a
+depender do tipo da variável, retorno de função ou até mesmo de uma
+concatenação de cadeia de caracteres, caso a variável seja do tipo
+cadeia de caracteres.
+
+\section{Expressões}
+\label{sec:expressoes}
+
+Existem quatro tipos diferentes de expressões em LisC: aritméticas,
+relacionais, lógicas e de concatenação. As seções a seguir vão especificar as
+características de cada uma das expressões disponíveis.
+
+\subsection{Aritmética}
+\label{subsec:aritmeticas}
+
+As expressões aritméticas estão relacionadas apenas as variáveis do tipo numéricas,
+ou seja, \emph{int} e \emph{float}. Em LisC temos somente os
+operadores abaixo, que estão listados de cima para baixo, do maior
+para o menor na ordem de precedência.
+
+\begin{description}
+\item [Negativo]: símbolo "-", é um operador unário.
+\item [Divisão e multiplicação]: símbolo "/" e "*", ambos são
+  operadores binários.
+\item [Soma e subtração]: símbolo "+" e "-", ambos são operadores binários.
+\end{description}
+
+Em expressões aritméticas temos que o operando mais a esquerda é
+chamado de operando alvo, ou seja, é ele quem vai ditar qual será o
+tipo final do resultado da operação. Sendo assim, caso o operando mais
+a esquerda seja do tipo \emph{int}, mesmo que o segundo operando seja
+do tipo \emph{float} o resultado da operação será um valor do tipo \emph{int}.
+
+\subsection{Relacional}
+\label{subsec:relacionais}
+
+As expressões relacionais tem como resultado um valor sempre do tipo
+booleano. Podemos ver abaixo os tipos de operadores relacionais
+disponíveis.
+
+\begin{description}
+\item [Igualdade]: símbolo é o "=="
+\item [Desigualdade]: símbolo é o "!="
+\item [Menor que]: símbolo é o "<"
+\item [Maior que]: símbolo é o ">"
+\item [Menor ou igual que]: símbolo é o "<="
+\item [Maior ou igual que]: símbolo é o ">="
+\end{description}
+
+Para tipos booleanos, como é um tipo de variável que só tem dois
+valores, só faz sentido pensar nos operadores de igualdade e
+desigualdade. Contudo, com relação aos outros tipos de variáveis
+podemos criar uma expressão relacional com qualquer um dos operadores
+disponíveis.
+
+Nas operações aritméticas tinhamos que mesmo que os
+operandos envolvidos não fossem do mesmo tipo, existia uma coerção
+automática para concluir o resultado da operação. Contudo, para
+expressões relacionais esse tipo de coerção não existe e resulta em
+erros. O motivo é trivial de perceber, não faz sentido relacionar duas
+variáveis de tipos diferentes.
+
+\subsection{Lógica}
+\label{subsec:logicas}
+
+As expressões lógicas são utilizadas apenas quando os seus operandos
+são booleanos. Podemos ver abaixo os tipos de operandos lógicos
+disponíveis.
+
+\begin{description}
+\item [Negação]: símbolo "!", unário
+\item [Conjunção]: símbolo "\&\&", binário
+\item [Disjunção]: símbolo "||", binário
+\end{description}
+
+Os operadores foram dispostos em ordem de precedência, do maior para o
+menor.
+
+\subsection{Concatenaçao}
+\label{subsec:concatenacao}
+
+Voltando daqui...
+
+
 
 
 
