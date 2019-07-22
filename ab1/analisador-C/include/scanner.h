@@ -3,7 +3,7 @@
  * @author Lucas Peixoto <lucaspeixotoac@gmail.com>
  *
  * @brief This header file defines the lexical part of the
- * LisC compiler and
+ * LisC compiler and token stuffs.
  */
 
 #ifndef _SCANNER_H_
