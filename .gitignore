@@ -5,3 +5,5 @@ tags
 *.aux
 *.out
 *.toc
+**/.ccls-cache/**
+**/build/**

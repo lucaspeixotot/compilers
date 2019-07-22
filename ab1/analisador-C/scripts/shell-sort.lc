@@ -1,0 +1,36 @@
+defun shell_sort(int ar[], int n)(int) {
+      defint gap, i;
+      for (gap, n/2, 0) {
+          for (i, gap, n) {
+              defint temp ar[i];
+              defint j;
+ 
+              for (j, i, gap+1) {
+                  if (ar[j - gap] > temp) {
+                     break;
+                  }
+
+                  set ar[j] arr[j-gap];
+                  set j (j-gap);
+              }
+
+              set ar[j] temp;
+              set i i+1;
+          }
+
+          set gap (gap/2);
+      }
+}
+
+defun start()(int) {
+      defint ar[] {12, 34, 54, 2, 3};
+      defint i;
+      defint n 5;
+
+      shell_sort(ar, n);
+
+      for(i, 0, n) {
+          echo ar[i];
+          set i i+1;
+      }
+}

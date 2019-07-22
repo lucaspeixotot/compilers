@@ -1,0 +1,567 @@
+% Created 2019-07-20 sáb 00:43
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Lucas Peixoto}
+\date{\today}
+\title{}
+\hypersetup{
+ pdfauthor={Lucas Peixoto},
+ pdftitle={},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 26.2 (Org mode 9.1.9)}, 
+ pdflang={English}}
+\begin{document}
+
+\tableofcontents
+
+Resumo de compiladores
+
+\section{Interpretação Pura}
+\label{sec:orgc448c15}
+Uma interpretação pura em compiladores é feita da seguinte maneira:
+dado o programa fonte, o programa fonte passará por um
+interpretador. Esse \textbf{interpretador} irá interpretar o código fonte a
+partir de dados de entrada e bibliotecas, gerando assim os
+resuldados.
+
+\subsection{Benefícios}
+\label{sec:org6c057c9}
+\begin{itemize}
+\item Os erros são mais fácies de serem detectados
+\item Além de testar pedaços de códigos
+\end{itemize}
+
+\subsection{Desvantagens}
+\label{sec:org023f03b}
+\begin{itemize}
+\item A execução é mais lenta
+\end{itemize}
+
+\section{Compilação para bytecode}
+\label{sec:org954d377}
+O uso de compilação para geração de bytecode faz com que o programa
+fonte passe pelas seguintes partes:
+
+\subsection{Analisador léxico}
+\label{sec:org650e104}
+O analisador léxico verifica se os elementos presentes no código
+fonte são válidos na linguagem. O seu papel é segmentar o programa
+e verificar a validade de cada segmento de código. A saída do
+analisador léxico são tokens. Tokens possuem um lexema, que nada
+mais é do que a classificação do token, linha, coluna e valor do
+token, que nada mais é do que o conteúdo em si.
+
+\subsection{Analisador sintático}
+\label{sec:org963d3a3}
+Tem como saída uma árvore de derivações. Esse analisador tem como
+objetivo requisitar tokens do analisador léxico e a partir desses
+tokens fazer uma análise sintática do programa fonte. A medida que
+a análise sintática é feita, o analisador vai montando a árvore de
+derivação. Existem vários tipos de analisadores sintáticos.
+
+\subsection{Analisador semântico}
+\label{sec:org357c967}
+A partir da ávore de derivação criada pelo analisador sintático, o
+analisador semântico avalia a compatibilidade dos nós e folhas
+dessa árvore. Ou seja, é no analisador semântico que a verificação
+dos tipos é efetuada, vendo assim se o programa fonte faz sentido
+segundo as especificações da linguagem.
+
+\subsection{Gerador de bytecode}
+\label{sec:org457c11e}
+Esse processo não é coberto pela disciplina.
+
+\subsection{Tabela de símbolos}
+\label{sec:orgae38d12}
+Estabelece uma comunicação entre fases(citadas acima) diferentes do
+compilador. Geralmente na tabela de símbolos temos informações a
+respeito de variávies, funções/procedimentos e parâmetros.
+\section{Análise Léxica(Scanner)}
+\label{sec:orgbd0e223}
+Lê o código fonte e o separa em lexemas(unidades
+léxicas). Identifica os lexemas, categorizando-os e guardando suas
+posições. Elimina comentários.
+
+Lexemas serão palavras reservadas ou não. De modo geral os lexemas
+podem ser :
+\begin{itemize}
+\item Identificadores
+\item Constantes
+\item Operadores
+\item Separadores
+\item Palavras reservadas
+\end{itemize}
+
+Para fazer a identificação de cada um desses tipos, pode-se usar:
+\begin{itemize}
+\item Expressões regulares
+\item Gramática regular
+\item Autômato finito determinístico
+\item Autômato finito não-determinístico
+\end{itemize}
+
+O alfabeto léxico se trata dos caracteres permitidos no código fonte,
+enquanto o alfabeto sintático se refere aos tokens possíveis.
+
+\section{Análise sintática(Parser)}
+\label{sec:orgfe88b1a}
+É a segunda fase de um compilador. Atua sobre uma GLC, dado o
+programa fonte e seus respectivos tokens, produz-se uma árvore de
+derivação que reflete a estrutura sintática da sentença.
+
+Existem algumas estratégias de análise:
+\begin{itemize}
+\item Top-down  ou descendente
+\begin{itemize}
+\item Backtracking
+\item Preditiva recursiva
+\item Preditiva tabular
+\end{itemize}
+\item Bottom-up ou ascendente(redutiva, empilha-reduz)
+\begin{itemize}
+\item Precedência de operadores
+\item SLR(Simple left to right rightmost)
+\end{itemize}
+\end{itemize}
+
+
+\section{Análise Top-Down}
+\label{sec:org64cfc39}
+A análise se inicia pela raiz da árvore através de
+derivação. Produções ao invés de erivações são escolhidas com base
+na entrada.
+
+\subsection{Análise com Backtracking}
+\label{sec:orgd311655}
+A cada derivação com mais de uma opção, cria-se um checkpoint que
+permite retorno em caso de erro
+
+\subsubsection{Desvantagens}
+\label{sec:org9153f67}
+\begin{itemize}
+\item É difícil encontrar a causa do erro
+\item Ineficiente
+\end{itemize}
+\subsubsection{Vantagens}
+\label{sec:orgdef5e7d}
+\begin{itemize}
+\item É capaz de analisar qualquer tipo de gramática tratável
+\end{itemize}
+
+\subsection{Análise recursiva preditiva}
+\label{sec:org7674257}
+A gramática não pode ter recursões à esquerda. Logo ela deve ser:
+\begin{itemize}
+\item Fatorada
+\item Primeiros terminais deriváveis de produções de um mesmo
+não-terminal não podem ter intersecções
+\end{itemize}
+
+\subsubsection{Características}
+\label{sec:org7ca3028}
+\begin{itemize}
+\item Fácil de implementar
+\item Muito código
+\item Permite tratar repetições e opcionalidades
+\end{itemize}
+
+Nesse tipo de analisador, o código é tratado sintáticamente da
+esquerda para a direita, onde para cada símbolo não terminal existe
+uma função que trata esse símbolo.
+
+\subsection{Análise preditiva tabular(não recursiva)}
+\label{sec:org316093c}
+Para esse tipo de análise a gramática também deve ser fatorada e os
+primeiros temrinais deriváveis de um mesmo não-terminal não podem
+ter intersecções.
+\subsubsection{Funcionamento}
+\label{sec:org4b56726}
+\begin{enumerate}
+\item Inicia-se o processamento lendo o primeiro token e com o
+símbolo inicial na pilha.
+\item Se entrada for EOF e a pilha estiver vazia a sentença é aceita.
+\item Se token na entrada corresponder ao terminal no topo da pilha,
+o token foi reconhecido, acessa-se o próximo token e
+desempilha-se o terminal
+\item Topo da pilha não-terminal, indexa-se a tabela de análise pelo
+mesmo e pelo token na entrada, se a casa indexada estiver vazia
+é um erro sintático, caso contrário, efetua-se a derivação indicada.
+\begin{enumerate}
+\item Desempilha-se o não-terminal e empilha o lado direito da
+produção na ordem inversa.
+\end{enumerate}
+\end{enumerate}
+
+
+\subsubsection{Exemplo:}
+\label{sec:orga4f6518}
+\begin{itemize}
+\item Gramática\\
+(1) Eb = Tb Ebr\\
+(2) Ebr = 'ou' Tb Ebr\\
+(3) Ebr = Vazio\\
+(4) Tb = Fb Tbr\\
+(5) Tbr = 'e' Fb Tbr\\
+(6) Tbr = Vazio\\
+(7) Fb = 'não' Fb\\
+(8) Fb = '(' Eb ')'\\
+(9) Fb = 'id'\\
+(10) Fb = 'verd'\\
+(11) Fb = 'falso'\\
+
+\item Tabela de análise com recuperação de erro local\\
+
+Apenas uma modificação é feita:
+\begin{itemize}
+\item Desempilha um símbolo
+\item Empilha um símbolo
+\item Introduz um terminal na entrada
+\item Trocar terminal da entrada\\
+\end{itemize}
+
+Tabela:
+\begin{itemize}
+\item é adicionada uma linha para os terminais que apareçam 
+fora da 1° posição em algum handle.
+\item Expande as produções vazias para posições em branco na mesma
+linha (porterga a identificação de erro)\\
+\end{itemize}
+
+Tipos de erros encontrados no exemplo:
+\begin{itemize}
+\item Err1:
+\begin{itemize}
+\item Msg: "Operando esperado"
+\item Ação: "Insere "id" na entrada"
+\end{itemize}
+\item Err2:
+\begin{itemize}
+\item Msg: " ')' esperado"
+\item Ação: Desempilha ')'
+\end{itemize}
+\item Err3:
+\begin{itemize}
+\item Msg: "EOF esperado"
+\item Ação: Elimina a lista restante da entrada
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{l|lllllllll|}
+\hline
+ & 'ou' & 'e' & 'nao' & '(' & ')' & 'id' & 'verd' & 'falso' & EOF\\
+\hline
+\hline
+Eb & Err1 & Err2 & d1 & d1 & Err1 & d1 & d1 & d1 & Err1\\
+\hline
+Ebr & d2 & Vazio & Vazio & Vazio & Vazio-d3 & Vazio & vazio & Vazaio & Vazio-d3\\
+\hline
+Tb & Err1 & Err1 & d4 & d4 & Err1 & d4 & d4 & d4 & Err1\\
+\hline
+Tbr & Vazio-d6 & d5 & Vazio & Vazio & Vazio-d6 & Vazio & Vazio & Vazio & Vazio-d6\\
+\hline
+Fb & Err1 & Err1 & d7 & d8 & Err1 & d9 & d10 & d11 & Err1\\
+\hline
+')' & Err2 & Err2 & Err2 & Err2 & DAT & Err2 & Err2 & Err2 & Err2\\
+\hline
+PV & Err3 & Err3 & Err3 & Err3 & Err3 & Err3 & Err3 & Err3 & AC\\
+\hline
+\end{tabular}
+\end{center}
+
+
+\begin{itemize}
+\item Tabela de análise com recuperação de erro pânico\\
+É necessário identificar os tokens de sincronização. Para cada
+não terminal temos que o token sync desse não terminal é dado
+pelo follow dele.
+
+Tratamento:
+\begin{itemize}
+\item Mensagem de erro
+\item EOF na entrada: encerra a análise
+\item Pilha:
+\begin{itemize}
+\item Terminal:
+\begin{itemize}
+\item Despreza tokens na entrada enquanto terminal da pilha
+for diferente do token de entrada
+\item Se terminal corresponder ao token de entrada continua a
+análise
+\end{itemize}
+\item Não-terminal
+\begin{itemize}
+\item Despreza tokens na entrada enquanto entrada não
+corresponder a um terminal de sincronização
+\item Quando corresponder: desempilha o não terminal e continua
+a análise
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{itemize}
+
+\begin{center}
+\begin{tabular}{l|lllllllll|}
+\hline
+ & 'ou' & 'e' & 'nao' & '(' & ')' & 'id' & 'verd' & 'falso' & EOF\\
+\hline
+\hline
+Eb & - & - & d1 & d1 & Sync & d1 & d1 & d1 & Sync\\
+\hline
+Ebr & d2 & - & - & - & Vazio-d3 & - & - & - & Vazio-d3\\
+\hline
+Tb & - & - & d4 & d4 & Sync & d4 & d4 & d4 & Sync\\
+\hline
+Tbr & Vazio-d6 & d5 & - & - & Vazio-d6 & - & - & - & Vazio-d6\\
+\hline
+Fb & Sync & Sync & d7 & d8 & Sync & d9 & d10 & d11 & Sync\\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Análise bottom-up}
+\label{sec:org018276e}
+\begin{itemize}
+\item Redutiva
+\item Empilha/reduz
+\item A partir das folhas da árvore
+\item Inicia com a pilha vazia
+\item Empilha símbolos até que na pilha estejam símbolos que
+correspondam ao lado direito de uma produção (\textbf{handle})
+\item Este \textbf{handle} é desempilhado e em seu lugar é empilhado o símbolo
+do lado esquerdo da produção(redução)
+\item São empilhados tokens ou símbolos não terminais quando ocorre uma
+redução
+\item A produção a ser usada só é conhecida no momento da redução
+\item Aceita quando na pilher tiver o símbolo inicial da GLC e na
+entrada EOF
+\item Se a gramática for não ambigua, então toda forma sentencial gerada
+por G tem exatamente um handle.
+\end{itemize}
+\subsection{Analisadores}
+\label{sec:org8db703a}
+\begin{itemize}
+\item Ações:
+\begin{itemize}
+\item Empilha (EAT): empilha o token na entrada e acessa o próximo
+token
+\item Reduz(ri): substitui o handle da produção (i) pelo terminal à
+esquerda nesta produção
+\item Aceita(Ac): reconhece a sentença quando na pilha tem o símbolo
+inicial e EOF na entrada
+\item Erro: demais casos
+\end{itemize}
+\item Tipos de analizadores:
+\begin{itemize}
+\item Precedência de operadores: bom para reconhecimento de
+expressões
+\item LR:
+\begin{itemize}
+\item SLR: Simple LR (só veremos esse)
+\item LALR: Look Ahead LR
+\item LR canônico
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\subsection{Analisador de precedência de operadores}
+\label{sec:orgb286ed0}
+\begin{itemize}
+\item Gramática de operadores
+\item Gramática simplificada
+\item Não pode ter dois não terminais adjascentes
+\item Não podem ter produções vazias
+\item Não ode ter um operador com aridades diferentes
+\item A gramática não tem informações de rpecedência e associatividade
+\begin{itemize}
+\item esta informação deve ser colocada na tabela de análise
+\end{itemize}
+\item Tabela de análise:
+\begin{itemize}
+\item Tokens na pilha x tokens na entrada, PST(pilha sem token)
+\item entrada(colunas): tokens e EOF
+\item PST pode estar vazia (PV) ou não ter um não terminal
+\end{itemize}
+\end{itemize}
+\subsubsection{Relação entre tokens + ao topo topo/PST e a entrada(tokens ou EOF)}
+\label{sec:org97c426e}
+\begin{itemize}
+\item Prioridade calculada em relação da precedência e da
+associatividade
+\item Se token na pilha tem prioridade:
+\begin{itemize}
+\item maior: reduz
+\item menor: empilha entrada
+\item igual: empilha entrada
+\end{itemize}
+\item APO não garante validade do handle
+\item Na redução os elementos da pilha devem ser testados para
+garantir esta validade
+\begin{itemize}
+\item Caso isso não ocorra, temos um erro na redução chamado de erro
+mais tarde
+\end{itemize}
+\item Erros identificados durante a análise, especificados na tabela
+de análise, são ditos erros mais cedo
+\end{itemize}
+\subsubsection{Exemplo}
+\label{sec:org28e5308}
+\begin{itemize}
+\item Gramática\\
+(1) Eb = Eb 'ou' Eb\\
+(2) ---- Eb 'e' Eb\\
+(3) ---- 'nao' Eb\\
+(4) ---- '(' Eb ')'\\
+(5) ---- 'id'\\
+(6) ---- 'verd'\\
+(7) ---- 'falso\\
+\end{itemize}
+
+Tipos de erro mais cedo encontrados:
+\begin{itemize}
+\item Err1:
+msg: ')' esperado
+ação: encerra análise
+\item Err2:
+msg: operador binário esperado
+ação: insere um operador binário
+\item Err3: ')' não esperado
+ação: remove ')' da entrada
+\end{itemize}
+
+Erros mais tarde que podem ocorrer:
+\begin{itemize}
+\item (1) e (2):\\
+Se topo != Eb\\
+  msg: Segundo operando faltando\\
+senão desempilha Eb\\
+desempilha 'ou'/'e'\\
+se topo != Eb\\
+  msg: Primeiro operando faltando\\
+senão desempilha Eb\\
+empilha novo Eb\\
+\item (3): \\
+se topo != Eb
+msg: operando faltando
+senão desempilha Eb
+desempilha 'nao'
+empilha novo Eb
+\item (4): \\
+desempilha ')'
+se topo != Eb
+msg: expressão booleana faltando
+senão desempilha Eb
+desempilha '('
+empilha novo Eb
+\item (5), (6) e (7):
+não existe o erro porque nunca é empilhado nada sobre esses
+terminais.
+\end{itemize}
+
+
+\begin{center}
+\begin{tabular}{l|lllllllll|}
+\hline
+ & 'ou' & 'e' & 'nao' & '(' & ')' & 'id' & 'verd' & 'falso' & EOF\\
+\hline
+\hline
+'ou' & r1 & EAT & EAT & EAT & r1 & EAT & EAT & EAT & r1\\
+\hline
+'e' & r2 & r2 & EAT & EAT & r2 & EAT & EAT & EAT & r2\\
+\hline
+'nao' & r3 & r3 & EAT & EAT & r3 & EAT & EAT & EAT & r3\\
+\hline
+'(' & EAT & EAT & EAT & EAT & EAT & EAT & EAT & EAT & Err1\\
+\hline
+')' & r4 & r4 & Err2 & Err2 & r4 & Err2 & Err2 & Err2 & r4\\
+\hline
+'id' & r5 & r5 & Err2 & Err2 & r5 & Err2 & Err2 & Err2 & r5\\
+\hline
+'verd' & r6 & r6 & Err2 & Err2 & r6 & Err2 & Err2 & Err2 & r6\\
+\hline
+'falso' & r7 & r7 & Err2 & Err2 & r7 & Err2 & Err2 & Err2 & r7\\
+\hline
+PST & EAT & EAT & EAT & EAT & Err3 & EAT & EAT & EAT & AC\\
+\hline
+\end{tabular}
+\end{center}
+
+\subsection{Analisador SLR}
+\label{sec:orgbd89409}
+Conjunto canônico de itens SLR
+\begin{itemize}
+\item Item Lr(0) em uma GLC marca uma posição no andamendo da análise
+marcada por um ponto.
+\end{itemize}
+
+\subsubsection{Exemplo}
+\label{sec:org92cf842}
+\begin{itemize}
+\item Gramática\\
+(0) S = Eb\\
+(1) Eb = Eb 'ou' Tb\\
+(2) Eb = Tb\\
+(3) Tb = Tb 'e' Fb\\
+(4) Tb = Fb\\
+(5) Fb = 'nao' Fb\\
+(6) Fb = '(' Eb ')'\\
+(7) Fb = 'id'\\
+\end{itemize}
+
+Fazendo o fechamento da gramática
+\begin{itemize}
+\item 0 = \{S = \textbf{.} Eb, Eb = \textbf{.} Eb 'ou' Tb, Eb = \textbf{.} Tb, Tb = \textbf{.} Tb
+'e' Fb, Tb = \textbf{.} Fb, Fb = \textbf{.} 'nao' Fb, Fb = \textbf{.} '(' Eb ')', Fb
+= \textbf{.} 'id'\}
+\item 1 = (0, Eb) = \{S = Eb \textbf{.}, Eb = Eb \textbf{.} 'ou' Tb\}
+\item 2 = (0, Tb) = \{Eb = Tb \textbf{.}, Tb = Tb \textbf{.} 'e' Fb\}
+\item 3 = (0, Fb) = \{Tb = Fb \textbf{.}\}
+\item 4 = (0, 'nao') = \{ Fb = 'nao' \textbf{.} Fb, Fb = \textbf{.} 'nao' Fb, Fb =
+\textbf{.} '(' Eb ')', Fb = \textbf{.} 'id'\}
+\item 5 = (0, '(') = \{ Fb = '(' \textbf{.} Eb ')', Eb = \textbf{.} Eb 'ou' Tb, 
+Eb = \textbf{.} Tb, Tb = \textbf{.} Tb 'e' Fb, Tb = \textbf{.} Fb, 
+Fb = \textbf{.} 'nao' Fb, Fb = \textbf{.} '(' Eb ')', Fb = \textbf{.} 'id'\}
+\item 6 = (0, 'id') = \{ Fb = 'id' \textbf{.}\}
+\item 7 = (1, 'ou') = \{ Eb = Eb 'ou' \textbf{.} Tb, Tb = \textbf{.} Tb
+'e' Fb, Tb = \textbf{.} Fb, Fb = \textbf{.} 'nao' Fb, Fb = \textbf{.} '(' Eb ')', Fb
+= \textbf{.} 'id'\}
+\item 8 = (2, 'e') = \{ Tb = Tb 'e' \textbf{.} Fb, Fb = \textbf{.} 'nao' Fb,
+Fb = \textbf{.} '(' Eb ')', Fb = \textbf{.} 'id'\}
+\item 9 = (4, Fb) = \{Fb = 'nao' Fb \textbf{.}\}
+\item (4, 'nao') = 4
+\item (4, '(') = 5
+\item (4, 'id') = 6
+\item 10 = (5, Eb) = \{Fb = '(' Eb \textbf{.} ')', Eb = Eb \textbf{.} 'ou' Tb\}
+\item (5, Tb) = 2
+\item (5, Fb) = 3
+\item (5, 'nao') = 4
+\item (5,  '(') = 5
+\item (5, 'id') = 6
+\item 11 = (7, Tb) = \{ Eb = Eb 'ou' Tb \textbf{.}, Tb = Tb \textbf{.} 'e' Fb \}
+\item (7, Fb) = 3
+\item (7, '(') = 5
+\item (7, 'nao') = 4
+\item (7, 'id') = 6
+\item 12 = (8, Fb) = \{ Tb = Tb 'e' Fb \textbf{.}\}
+\item (8, 'nao') = 4
+\item (8, '(') = 5
+\item (8, 'id') = 6
+\item 13 = (10, ')') = \{ Fb = '(' Eb ')' \textbf{.}\}
+\item (10, 'ou') = 7
+\item (11, 'e') = 8
+\end{itemize}
+\end{document}
