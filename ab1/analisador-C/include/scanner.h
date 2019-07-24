@@ -51,6 +51,7 @@ enum cat {
     NIL,
     SET,
     READ,
+    START,
     CONST_FLOAT,
     CONST_INT,
     CONST_STRING,

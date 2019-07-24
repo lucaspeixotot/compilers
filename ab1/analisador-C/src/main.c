@@ -7,8 +7,10 @@ int main(int argc, char **argv)
     int err = 0;
     int rc  = 0;
 
+    /*char filename[] = "../scripts/hello-world.lc";*/
     char filename[] = "../scripts/fibonacci.lc";
-    err             = scanner_init(filename);
+    /* char filename[] = "../scripts/shell-sort.lc"; */
+    err = scanner_init(filename);
     if (err) {
         return err;
     }
@@ -17,12 +19,12 @@ int main(int argc, char **argv)
     rc         = scanner_next_token(&tk);
 
     while (rc >= 0) {
+        printf("          [%04d, %04d] (%04d, %20s) {%s}\n", tk.line, tk.column, tk.cat,
+               cat_to_string(tk.cat), tk.value);
+
         if (tk.cat == CAT_EOF) {
             break;
         }
-
-        printf("          [%04d, %04d] (%04d, %20s) {%s}\n", tk.line, tk.column, tk.cat,
-               cat_to_string(tk.cat), tk.value);
 
         rc = scanner_next_token(&tk);
 

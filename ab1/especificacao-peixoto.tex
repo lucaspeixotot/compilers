@@ -220,18 +220,22 @@ expressões e mais.
 A especificação dessa linguagem servirá de base para a implementação
 dos analisadore léxico e sintático, que serão desenvolvidas
 posteriormente no decorrer da disciplina. Ambos os analisadores serão
-implementados na linguagem de programação C. Ao fim deste documento
-também existirá uma seção reservada para a especificação dos tokens da
-linguagem.
+implementados na linguagem de programação C. A linguagem permitirá ser
+analisada em passo único, com o analisador léxico funcionando
+on-the-fly a medida que o analisador sintático requisita novos
+tokens. Ao fim deste documento também existirá uma seção reservada
+para a especificação dos tokens da linguagem.
+
+
 
 
 \chapter{Estrutura do programa}
 \label{cha:estrutura-do-programa}
 Esse capítulo tem como objetivo especificar como se da a estrutura
 geral de um programa em LisC. O início de um programa em LisC ocorre
-com a definição de uma função chamada \textbf{begin}, que retorna um
+com a definição de uma função chamada \textbf{start}, que retorna um
 \emph{inteiro}. Sem essa função a compilação do programa da erro. Um
-exemplo de código de uma função \textbf{begin} pode ser visto no
+exemplo de código de uma função \textbf{start} pode ser visto no
 \textbf{código \ref{code:begin}}.
 Em LisC temos que as funções só podem ser declaradas e definidas num
 escopo global, ou seja, não é permitido que uma função seja criada
@@ -280,8 +284,8 @@ variáveis.
 Os identificadores em LisC são declarados como na maioria das outras linguagens,
 iniciando com uma letra e seguido ou não de uma ou mais letras e
 dígitos. Em LisC os identificadores também são sensíveis à capitalização, além
-de não possuir limite de caracteres. A definição de letra e dígito
-pode ser dada como segue:
+de não possuir limite de caracteres. A definição do conjunto de letra
+e dígito é dada como segue:
 
 \begin{description}
 \item [Letra]:pertence ao conjunto de caracteres $[A-Z]\cup[a-z]$
@@ -311,7 +315,7 @@ As palavras reservadas da linguagem podem ser vistas na tabela
     if&  else& int &  for& while \\ \hline
     echo&  return&  break&  continue& nil \\ \hline
     true&  false& char& float & bool\\ \hline
-    string&  defstring& &  &\\ \hline
+    string&  defstring& start&  &\\ \hline
   \end{tabular}
 \end{table}
 
@@ -321,7 +325,7 @@ As palavras reservadas da linguagem podem ser vistas na tabela
 A linguagem LisC possui os seguintes tipos de dados: inteiro, ponto
 flutuante, caractere e booleano. E possui as seguintes estruturas de
 dados: cadeia de caracteres e arranjos unidimensionais. No capítulo
-\ref{cha:atribuicoes-expressoes-operadores} veremos com mais detalhes
+\ref{cha:atribuicoes-e-expressoes} veremos com mais detalhes
 como atribuir valor as variáveis que serão vistas nesse capítulo, o
 que envolve os tipos de operação.
 
@@ -369,7 +373,6 @@ os seguintes valores: [-2.2, -40.5, 0, 55.0, 12.1].
 
 \subsection{Booleano}
 \label{subsec:booleano}
-p
 As variáveis do tipo booleano representam apenas dois
 valores: verdadeiro ou falso. Podemos ver no \textbf{código}
 \ref{code:booleano} como é feita a declaração de uma variável desse
@@ -496,9 +499,9 @@ conversão de tipos.
     \hline
     De & Para \\ \hline
     Inteiro & String, Ponto flutuante, Caracter, Booleano \\ 
-    Ponto flutuante & String, Inteiro \\     
+    Ponto flutuante & String, Inteiro, Booleano \\     
     Booleano & String \\ 
-    Caracter & String \\     \hline
+    Caracter & String, Inteiro \\     \hline
   \end{tabular}
 \end{table}
 
@@ -556,10 +559,11 @@ imediato um valor inicial. Após a definição da variável, qualquer
 atribuição é feita a partir da palavra reservada \emph{set}.
 
 Uma variável pode ter seu valor alterado a partir de uma constante
-literal, de uma expressão aritmética, relacional ou lógica, a
+literal, de uma expressão aritmética, relacional ou lógica a
 depender do tipo da variável, retorno de função ou até mesmo de uma
 concatenação de cadeia de caracteres, caso a variável seja do tipo
-cadeia de caracteres.
+cadeia de caracteres, caso contrário poderá existir uma coerção
+automática se for possível.
 
 \section{Expressões}
 \label{sec:expressoes}
@@ -578,10 +582,10 @@ operadores abaixo, que estão listados de cima para baixo, do maior
 para o menor na ordem de precedência.
 
 \begin{description}
-\item [Negativo]: símbolo "-", é um operador unário.
-\item [Divisão e multiplicação]: símbolo "/" e "*", ambos são
+\item [Negativo]: símbolo ``-``, é um operador unário.
+\item [Divisão e multiplicação]: símbolo ``/`` e ``*``, ambos são
   operadores binários.
-\item [Soma e subtração]: símbolo "+" e "-", ambos são operadores binários.
+\item [Soma e subtração]: símbolo ``+`` e ``-``, ambos são operadores binários.
 \end{description}
 
 Em expressões aritméticas temos que o operando mais a esquerda é
@@ -598,12 +602,12 @@ booleano. Podemos ver abaixo os tipos de operadores relacionais
 disponíveis.
 
 \begin{description}
-\item [Igualdade]: símbolo é o "=="
-\item [Desigualdade]: símbolo é o "!="
-\item [Menor que]: símbolo é o "<"
-\item [Maior que]: símbolo é o ">"
-\item [Menor ou igual que]: símbolo é o "<="
-\item [Maior ou igual que]: símbolo é o ">="
+\item [Igualdade]: símbolo é o ``==``
+\item [Desigualdade]: símbolo é o ``!=``
+\item [Menor que]: símbolo é o ``<``
+\item [Maior que]: símbolo é o ``>``
+\item [Menor ou igual que]: símbolo é o ``<=``
+\item [Maior ou igual que]: símbolo é o ``>=``
 \end{description}
 
 Para tipos booleanos, como é um tipo de variável que só tem dois
@@ -627,9 +631,9 @@ são booleanos. Podemos ver abaixo os tipos de operandos lógicos
 disponíveis.
 
 \begin{description}
-\item [Negação]: símbolo "!", unário
-\item [Conjunção]: símbolo "\&\&", binário
-\item [Disjunção]: símbolo "||", binário
+\item [Negação]: símbolo `` ! ``, unário
+\item [Conjunção]: símbolo ``\&\&``, binário
+\item [Disjunção]: símbolo ``||``, binário
 \end{description}
 
 Os operadores foram dispostos em ordem de precedência, do maior para o
@@ -639,15 +643,16 @@ menor.
 \label{subsec:concatenacao}
 
 As operações de concatenação tem como resultado sempre um valor do
-tipo string. Quando a concatenação é feita a partir de um caracter ou
-uma cadeia de caractere a operação é feita normalmente, já que como
-uma cadeia de caractere é um conjunto de caracteres, a operação não
-precisa de conversão de tipo. Contudo, quando a operação é feita com a
-presença de valores numéricos ou booleanos, estes são convertidos para
-string antes da operação ser efetuada.
+tipo string. Quando a operação é feita com a presença de operandos que
+não são do tipo string, é necessário que seja feita uma coerção dos
+tipos para string. Vale lembrar da \textbf{seção} \ref{subsec:coercoes-admitidas} que todos os tipos de
+variáveis primitivas tem a possibilidade de coerção automática para
+string.
+
 
 Temos no \textbf{código} \ref{code:concat} exemplos de código
-envolvendo concatenação em LisC, onde o operador de concatenação é o "<<".
+envolvendo concatenação em LisC, onde o operador de concatenação é o
+``< <``.
 
 \begin{lstlisting}[label=code:concat,caption=Exemplo de expressões de concatenação]
   defint idade 5;
@@ -734,7 +739,8 @@ temos a associatividade da direita para a esquerda.
 Nesse capítulo vamos discutir um pouco mais sobre algumas instruções
 importantes em LisC, sendo elas as instruções de Entrada, Saída,
 controles lógicos e estruturas de repetição. Algumas dessas instruções
-já foram apresentadas ao longo, mas agora serão definidas.
+já foram apresentadas ao longo deste documeno, mas agora elas serão
+definidas de forma mais explícita.
 
 \section{Entrada}
 \label{sec:entrada}
@@ -746,7 +752,7 @@ tipo de instrução no \textbf{código} \ref{code:read}.
 
 \begin{lstlisting}[label=code:read,caption=Exemplo de código da
   instrução read.]
-  // read <variaveis que deve ser inseridas>
+  // read <variaveis que devem ser inseridas>
   defint a, b, c;
   read (a, b, c);
   // a instrucao acima espera do stdin a entrada de 3 valores
@@ -772,9 +778,8 @@ instrução pode ser utilizada.
   
   echo ("a = " << a << "\nb = %d") (b);
 \end{lstlisting}
-A instruçao \emph{echo} já adiciona automaticamente um
-\emph{\textbackslash n} ao
-término do texto formatado.
+
+Também é possível utilizar constantes literais no texto formatado.
 
 \section{Controles lógicos}
 \label{sec:controles-logicos}
@@ -818,13 +823,16 @@ instruções que poderiam ser utilizadas num escopo de função, ou seja,
 podem existir outras estruturas de decisão, chamadas de funções,
 definição de variáveis, estruturas de repetição e etc.
 
+Uma estrutura lógica \emph{if} não precisa necessariamente estar
+associada a um bloco de código criado a partir de um \emph{else}.
+
 \section{Estruturas de repetição}
 \label{sec:estruturas-de-repeticao}
 
 Existem dois tipos de estrutura de repetição em LisC, a primeira é a
 estrutura de repetição baseada num controle lógico, já a segunda é a
 estrutura de repetição baseada num contador. A primeira estrutura será
-executada até quando a expressão lógica for verdadeira. A segnda
+executada até quando a expressão lógica for verdadeira. A segunda
 estrutura será executada até quando a variável controlada não atingir
 o valor final dela.
 
@@ -845,15 +853,17 @@ através das palavras reservadas \emph{while} e \emph{for}, respectivamente.
 
 \begin{lstlisting}[label=code:for,caption=Exemplo da estrutura de
   repetição for]
-  // for (<contador>, <valor inicial>, <valor final>) {<bloco de codigo>}
+  // for (<contador>, <valor inicial>, <valor final>, <passo>) {<bloco de codigo>}
   defint count;
 
-  for (count, 0, 10) {
+  for (count, 0, 10, 1) {
     echo count;
-
-    set count count+1;
   }
 \end{lstlisting}
+
+Note que a estrutura de repetição \emph{for} permite controle de
+passo. Caso o controle de passo não seja passado, o valor padrão é
+1. Caso seja passado, o controle de passo passa a ser o valor especificado.
 
 \subsection{Desvios incondicionais}
 \label{subsec:desvios-incondicionais}
@@ -880,7 +890,7 @@ podemos visualizar essas instruções atuando.
       break;
     }
 
-    echo count;
+    echo count << "\n";
   }
 
   // esse codigo tras como saida
@@ -982,7 +992,7 @@ sobrecarregadas e não podem ser genéricos.
 
     echo "Os primeiros %d termos de fibonacci sao:" (n);
 
-    for (c, 0, n) {
+    while (c < n) {
       if (c <= 1) {
         set next c;
       }
@@ -992,7 +1002,13 @@ sobrecarregadas e não podem ser genéricos.
         set second next;
       }
 
-      echo next;
+      if (c == n-1) {
+        echo next;
+      }
+      else {
+        echo next << ", ";
+      }
+
       set c c+1;
     }
     return 0;
@@ -1004,27 +1020,25 @@ sobrecarregadas e não podem ser genéricos.
 
 \begin{lstlisting}[label=code:shell-sort,caption=Programa do shell
   sort]
-  defun shell_sort(int ar[], int n)(int) {
-    defint gap, i;
-    for (gap, n/2, 0) {
-      for (i, gap, n) {
-        defint temp ar[i];
-        defint j;
+  defun shell_sort(int ar[], int size)(void) {
+    defint i, j, value;
+    defint gap 1;
+    
+    while (gap < size) {
+      set gap 3*gap+1;
+    }
 
-        for (j, i, gap+1) {
-          if (ar[j - gap] > temp) {
-            break;
-          }
-
-          set ar[j] arr[j-gap];
-          set j (j-gap);
+    while (gap > 0) {
+      for(i, gap, size) {
+        set value ar[i];
+        set j i;
+        while (j > gap-1 && value <= ar[j - gap]) {
+          set ar[j] ar[j-gap];
+          set j j-gap;
         }
-
-        set ar[j] temp;
-        set i i+1;
+        set ar[j] value;
       }
-
-      set gap (gap/2);
+      set gap gap/3;
     }
   }
 
@@ -1037,7 +1051,6 @@ sobrecarregadas e não podem ser genéricos.
 
     for(i, 0, n) {
       echo ar[i];
-      set i i+1;
     }
   }
 

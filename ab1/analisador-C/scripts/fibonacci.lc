@@ -1,4 +1,4 @@
-  defun start()(int) {
+defun start()(int) {
     defint n;
     defint first 0;
     defint second 1;
@@ -10,18 +10,24 @@
 
     echo "Os primeiros %d termos de fibonacci sao:" (n);
 
-    for (c, 0, n) {
-      if (c <= 1) {
-        set next c;
-      }
-      else {
-        set next (first + second);
-        set first second;
-        set second next;
-      }
+    while (c < n) {
+        if (c <= 1) {
+            set next c;
+        }
+        else {
+            set next (first + second);
+            set first second;
+            set second next;
+        }
 
-      echo next;
-      set c c+1;
+        if (c == n-1) {
+            echo next;
+        }
+        else {
+            echo next << ", ";
+        }
+    
+        set c c+1;
     }
     return 0;
-  }
+}
