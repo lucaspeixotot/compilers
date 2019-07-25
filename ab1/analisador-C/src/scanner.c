@@ -68,6 +68,7 @@ const char ERs[][STR_REGEX_LENGTH] = {
     "\\}",
     "\\;",
     "\\,",
+    "void",
     "([A-Za-z]|_)\\w*",
 };
 
@@ -123,6 +124,7 @@ const char cat_to_value[][CATEGORY_LENGTH_VALUE] = {"INT_TYPE",
                                                     "CLOSE_KEYS",
                                                     "SEMICOLON",
                                                     "COMMA",
+                                                    "VOID",
                                                     "ID",
                                                     "CAT_EOF",
                                                     "CATEGORIES_SIZE"};

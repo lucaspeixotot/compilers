@@ -1060,7 +1060,177 @@ sobrecarregadas e não podem ser genéricos.
 \chapter{Especificação dos tokens}
 \label{cha:especificacao-dos-tokens}
 
+Nesse capítulo iremos falar sobre a especificação dos tokens da
+linguagem LisC. Na \textbf{seção} \ref{cha:intro} já foi apresentado
+que a linguagem de programação escolhida para implementar o analisador
+léxico e sintático será em C.
 
+
+\begin{lstlisting}[label=code:enums-C,caption=Enumeração das
+    categorias dos tokens,language=C]
+/**
+ * Enum for token category
+ *
+*/
+enum cat {
+    INT_TYPE = 0,
+    CHAR_TYPE, // 1
+    STRING_TYPE, // 2
+    BOOL_TYPE, // 3
+    FLOAT_TYPE, // 4
+    FORMAT_FIELD, // 5
+    FORMAT_DECIMAL, // 6
+    DEFUN, // 7
+    DEFINT, // 8
+    DEFCHAR, // 9
+    DEFFLOAT, // 10
+    DEFBOOL, // 11
+    DEFSTRING, // 12
+    IF, // 13
+    ELSE, // 14
+    FOR, // 15
+    WHILE, // 16
+    ECHO, // 17
+    RETURN, // 18
+    BREAK, // 19
+    CONTINUE, // 20
+    NIL, // 21
+    SET, // 22
+    READ, // 23
+    START, // 24
+    CONST_FLOAT, // 25
+    CONST_INT, // 26
+    CONST_STRING, // 27
+    CONST_CHAR, // 28
+    CONST_BOOL, // 29
+    OP_MINUS, // 30
+    OP_PLUS, // 31
+    OP_DIVIDE, // 32
+    OP_MULT, // 33
+    OP_EQUAL, // 34
+    OP_DIFF, // 35
+    OP_LEQ, // 36
+    OP_LESS, // 37
+    OP_GEQ, // 38
+    OP_GREATER, // 39
+    OP_OR, // 40
+    OP_AND, // 41
+    OP_NOT, // 42
+    OP_CONCAT, // 43
+    OPEN_PAREN, // 44
+    CLOSE_PAREN, // 45
+    OPEN_BRACKETS, // 46
+    CLOSE_BRACKETS, // 47
+    OPEN_KEYS, // 48
+    CLOSE_KEYS, // 49
+    SEMICOLON, // 50
+    COMMA, // 51
+    VOID, // 52
+    ID, // 53
+    CAT_EOF, // 54
+};
+typedef enum cat cat_t;
+
+
+\end{lstlisting}
+
+As \textbf{tabelas} \ref{tab:cat-desc1} e \ref{tab:cat-desc2}
+contém as descrições das categorias dos tokens mostrados no
+\textbf{código} \ref{code:enums-C}.
+
+\begin{table}[H]
+  \centering
+\begin{tabular}{|l|l|}
+\hline
+Categoria simbólica & Descrição    \\ \hline
+INT\_TYPE           & Tipo inteiro \\
+CHAR\_TYPE          & Tipo char    \\
+STRING\_TYPE          &   Tipo string  \\
+BOOL\_TYPE          &   Tipo booleano  \\
+FLOAT\_TYPE          &   Tipo ponto flutuante  \\
+FORMAT\_FIELD          &   Operador limitador de quantidade de campos  \\
+FORMAT\_DECIMAL          &   Operador limitador de casas decimais  \\
+DEFUN          &   Marcador de declaração de função  \\
+DEFINT          &   Marcador de declaração de inteiro  \\
+DEFCHAR          &   Marcador de declaração de char  \\
+DEFFLOAT          &   Marcador de declaração de ponto flutuante  \\
+DEFBOOL           & Marcador de declaração de booleano \\
+DEFSTRING           & Marcador de declaração de string \\
+IF           & Condicional se \\
+ELSE           & Condicional else \\
+FOR           & Iterador for \\
+WHILE           & Iterador while \\
+ECHO           & Saída \\
+RETURN           & Retorno de função \\
+BREAK           & Desvio incondicional break \\
+CONTINUE           & Desvio incondicional continue \\
+NIL           & Nulo \\
+SET           & Função de atribuição \\
+READ           & Entrada \\
+START           & Função principal \\
+CONST\_FLOAT           & Constante literal float \\
+CONST\_INT           & Constante literal inteira \\
+CONST\_STRING           & Constante literal string \\
+CONST\_CHAR           & Constante literal char \\
+CONST\_BOOL           & Constante literal booleana \\ \hline
+\end{tabular}
+\caption{Categorias e descrições}
+\label{tab:cat-desc1}
+\end{table}
+
+
+\begin{table}[H]
+  \centering
+\begin{tabular}{|l|l|}
+  \hline
+  Categoria simbólica & Descrição    \\ \hline
+OP\_MINUS           & Operador subtração ou unário negativo \\
+OP\_PLUS           & Operador adição \\
+OP\_DIVIDE           & Operador divisão \\
+OP\_MULT           & Operador multiplicação \\
+OP\_EQUAL           & Operador igualdade \\
+OP\_DIFF           & Operador diferença \\
+OP\_LEQ           & Operador menor igual que \\
+OP\_LESS           & Operador menor que \\
+OP\_GEQ           & Operador maior igual que \\
+OP\_GREATER           & Operador maior que \\
+OP\_OR           & Operador ou \\
+OP\_AND           & Operador and \\
+OP\_NOT           & Operador negação \\
+OP\_CONCAT           & Operador concatenação \\
+OPEN\_PAREN           & Abertura de parênteses  \\
+CLOSE\_PAREN           & Fechamento de parênteses \\
+OPEN\_BRACKETS           & Abertura de colchetes  \\
+CLOSE\_BRACKES           & Fechamento de colchetes \\
+OPEN\_KEYS           & Abertura de chaves  \\
+CLOSE\_KEYS           & Fechamento de chaves \\
+SEMICOLON           & Ponto e vírgula \\
+COMMA           & Vírgula \\
+VOID & Tipo void \\
+ID           & Identificador \\
+CAT\_EOF                    & Fim de arquivo             \\ \hline
+\end{tabular}
+\caption{Categorias e descrições}
+\label{tab:cat-desc2}
+\end{table}
+
+Na \textbf{tabela} \ref{tab:auxiliares} temos as expressões regulares
+auxiliares.
+
+\begin{table}[H]
+\begin{tabular}{|l|l|}
+\hline
+Nome & Expressão regular    \\ \hline
+letra           & [A-Za-z] \\
+dígito          & [0-9]    \\
+símbolo          & |'!'|'\#'|'\$'|'\%'|'\&'|'\textbackslash'|'''|'('|')'|'*'|'+'|','|'-'|'.'|'/'|':'|';'|'<'|'>'|'='|'?'|'@'|'['|']'|'\_'|'\{'|'\}'| \\
+                    &              \\ \hline
+\end{tabular}
+\caption{Expressões regulares auxiliares}
+\label{tab:auxiliares}
+\end{table}
+
+FALTANDO CATEGORIA E SUAS EXPRESSÕES REGULARES
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS

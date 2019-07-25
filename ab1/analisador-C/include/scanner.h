@@ -79,6 +79,7 @@ enum cat {
     CLOSE_KEYS,
     SEMICOLON,
     COMMA,
+    VOID,
     ID,
     CAT_EOF,
     CATEGORIES_SIZE

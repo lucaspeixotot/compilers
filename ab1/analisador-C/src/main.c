@@ -8,8 +8,8 @@ int main(int argc, char **argv)
     int rc  = 0;
 
     /*char filename[] = "../scripts/hello-world.lc";*/
-    char filename[] = "../scripts/fibonacci.lc";
-    /* char filename[] = "../scripts/shell-sort.lc"; */
+    /*char filename[] = "../scripts/fibonacci.lc";*/
+     char filename[] = "../scripts/shell-sort.lc"; 
     err = scanner_init(filename);
     if (err) {
         return err;
