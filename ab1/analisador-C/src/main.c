@@ -9,7 +9,10 @@ int main(int argc, char **argv)
 
     /*char filename[] = "../scripts/hello-world.lc";*/
     /*char filename[] = "../scripts/fibonacci.lc";*/
-     char filename[] = "../scripts/shell-sort.lc"; 
+    /* char filename[]   = "../scripts/shell-sort.lc"; */
+    char filename[50] = {0};
+
+    scanf("%s/n", filename);
     err = scanner_init(filename);
     if (err) {
         return err;
