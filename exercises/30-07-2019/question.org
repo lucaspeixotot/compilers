@@ -1,0 +1,64 @@
+* Exercício para ser entregue no dia 30-07-2019
+
+Implementar o interpretador de uma calculadora que possui as
+operações: '+', '-', '*', '/', '%', '**'.
+
+* Resolução
+
+Primeiro será implementada a gramática que corresponde a essa
+calculadora e em seguida será implementado o interpretador em C.
+
+(1) Res = Ea '='
+(2) Ea = Ea '+' Ta
+(3) Ea = Ta
+(4) Ta = Ta '-' Fa
+(5) Ta = Ta '*' Fa
+(6) Ta = Ta '/' Fa
+(7) Ta = Ta '%' Fa
+(8) Ta = Ta '**' Fa
+(9) Ta = Fa
+(10) Fa = '(' Ea ')'
+(11) Fa = 'CteR'
+
+Como o interpretador será um analisador sintático preditivo recursivo,
+se faz necessário fazer alterações na gramática a fim de tornar
+possível utilizar esse interpretador.
+
+(1) Res = Ea '='
+(2) Ea = Ta Ear
+(3) Ear = '+' Ta Ear
+(4) Ear = NULL
+(5) Ta = Fa Tar
+(6) Tar = '-' Fa Tar
+(7) Tar = '*' Fa Tar
+(8) Tar = '/' Fa Tar
+(9) Tar = '%' Fa Tar
+(10) Tar = '**' Fa Tar
+(11) Tar = NULL
+(12) Fa = '(' Ea ')'
+(13) Fa = 'CteR'
+
+Ações semânticas a serem executadas em cada produção:
+
+(1) Res = Ea '=' { printf("%d\n", Ea.val) }
+(2) Ea = Ta { Ear.vh = Ta.val }  Ear { Ea.val = Ear.vs }
+(3) Ear = '+' Ta { Ear1.vh = Ear.vh + Ta.val } Ear1 { Ear.vs = Ear1.vs }
+(4) Ear = { Ear.vs = Ear.vs }
+(5) Ta = Fa { Tar.vh = Fa.val } Tar { Ta.val = Tar.vs }
+(6) Tar = '-' Fa { Tar1.vh = Tar.vh - Fa.val } Tar1 { Tar.vs = Tar1.vs }
+(7) Tar = '*' Fa { Tar1.vh = Tar.vh * Fa.val } Tar1 { Tar.vs = Tar1.vs }
+(8) Tar = '/' Fa { Tar1.vh = Tar.vh / Fa.val } Tar1 { Tar.vs = Tar1.vs }
+(9) Tar = '%' Fa { Tar1.vh = Tar.vh % Fa.val } Tar1 { Tar.vs = Tar1.vs }
+(10) Tar = '**' Fa { Tar1.vh = Tar.vh ** Fa.val } Tar1 { Tar.vs = Tar1.vs }
+(11) Tar = { Tar.vs = Tar.vh }
+(12) Fa = '(' Ea { Fa.val = Ea.val } ')'
+(13) Fa = 'CteR' { Fa.val = Cter.val }
+
+| Atributos herdados | Atributos sintetizados |
+|--------------------+------------------------|
+| Ear.vh             | Ea.val                 |
+| Tar.vh             | Ear.vs                 |
+|                    | Ta.val                 |
+|                    | Tar.vs                 |
+|                    | Fa.val                 |
+|                    | Cter.val               |

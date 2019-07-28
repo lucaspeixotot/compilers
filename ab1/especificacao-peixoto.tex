@@ -119,7 +119,7 @@
 \titulo{Especificação da linguagem de programação LisC}
 \autor{Lucas Peixoto de Almeida Cavalcante}
 \local{Brasil}
-\data{Maceió/Al\\Julho de 2019}
+\data{Maceió/Al\\2019.1}
 \instituicao{%
   Universidade Federal de Alagoas
   \par
@@ -128,7 +128,7 @@
 \tipotrabalho{Relatório técnico}
 \preambulo{Especificação da linguagem de programação LisC, definida
   pelo aluno, para a disciplina de Compiladores, correspondente à
-  parte da avaliação da AB1 do semestre de 2019.2, sob orientação do
+  parte da avaliação da AB1 do semestre de 2019.1, sob orientação do
   \textbf{Prof. Alcino Dall Igna Jr.}}
 % ---
 
@@ -189,7 +189,7 @@
 % ---
 % Capa
 % ---
-\imprimircapa
+%% \imprimircapa
 % ---
 
 % ---
@@ -247,7 +247,7 @@ de chaves(\{\}).
     exemplo de uma função begin.]
   defun start ()(int) {
     defint a 5;
-    echo ("a = \%d") (a);
+    echo ("a = %d") (a);
     return 0;
   }
 \end{lstlisting}
@@ -315,7 +315,7 @@ As palavras reservadas da linguagem podem ser vistas na tabela
     if&  else& int &  for& while \\ \hline
     echo&  return&  break&  continue& nil \\ \hline
     true&  false& char& float & bool\\ \hline
-    string&  defstring& start&  &\\ \hline
+    string&  defstring& start& read &\\ \hline
   \end{tabular}
 \end{table}
 
@@ -386,7 +386,7 @@ tipo. A palavra reservada que representa esse tipo de variável é a palavra \te
 As contantes literais booleanas podem ser somente: \textbf{true} ou
 \textbf{false}. Desse modo não existe um intervalo associado a esse
 tipo de variável. Em LisC qualquer valor diferente de zero é
-considerado verdadeiro e qualquer valor igual a zero é considerado
+considerado verdadeiro e zero é considerado
 falso.
 
 \subsection{Caractere}
@@ -437,8 +437,8 @@ declaração desse tipo de variável para cada um dos tipos primitivos.
 
 As constantes literais desse tipo de variável não possuem um intervalo
 de valores, visto que esse tipo de análise não faz muito
-sentido. Exemplos desse tipo de variável podem ser: [1,2,3],
-[true,false,true,false], [2.3, 1.6, -1.2].
+sentido. Exemplos desse tipo de variável podem ser: \{1,2,3\},
+\{true,false,true,false\}, \{2.3, 1.6, -1.2\}.
 
 O limite inferior de um arranjo unidimensional é 0, e o limite
 superior é dado pelo tamanho - 1. Desse modo, o acesso a um elemento
@@ -448,7 +448,7 @@ específico dentro do arranjo pode ser feito a partir do
 \begin{lstlisting}[label=code:acesso,caption=Acessando elemento dentro
     de um arranjo unidimensional]
   defint numeros[5] {1,2,3,4,5}
-  echo ("acessando indice \%d do arranjo numeros, valor: \%d") (2, numeros[1]) 
+  echo ("acessando indice %d do arranjo numeros, valor: %d") (2, numeros[1]) 
 \end{lstlisting}
 
 
@@ -472,8 +472,8 @@ no momento da definição.
 Note que na variável \emph{texto} o tamanho alocado para ela foi de
 15 caracteres, sendo 14 para o texto em sí(\emph{Saudosa maloca}) e
 mais um para marcar o fim da string, que seria o caracter "\textbackslash0". Para
-strings, o caracter considerado nulo é o caracter "\textbackslash0" e geralmente
-nas linguagens é utilizado para marcar o fim de uma string.
+strings, o caracter considerado nulo é o caracter "\textbackslash0"
+que é utilizado em C, por exemplo, para marcar o fim de uma string.
 
 As formas de acesso a caracteres específicos de uma cadeia de
 caracteres é feito da mesma forma que em arranjos unidimensionais.
@@ -646,7 +646,7 @@ As operações de concatenação tem como resultado sempre um valor do
 tipo string. Quando a operação é feita com a presença de operandos que
 não são do tipo string, é necessário que seja feita uma coerção dos
 tipos para string. Vale lembrar da \textbf{seção} \ref{subsec:coercoes-admitidas} que todos os tipos de
-variáveis primitivas tem a possibilidade de coerção automática para
+variáveis primitivas tem a possibilidade de coerção para
 string.
 
 
