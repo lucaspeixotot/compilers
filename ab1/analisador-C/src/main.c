@@ -7,13 +7,12 @@ int main(int argc, char **argv)
     int err = 0;
     int rc  = 0;
 
-    /*char filename[] = "../scripts/hello-world.lc";*/
-    /*char filename[] = "../scripts/fibonacci.lc";*/
-    /* char filename[]   = "../scripts/shell-sort.lc"; */
-    char filename[50] = {0};
+    if (argc != 2) {
+        printf("Wrong number of arguments!!\n");
+        return -1;
+    }
 
-    scanf("%s/n", filename);
-    err = scanner_init(filename);
+    err = scanner_init(argv[1]);
     if (err) {
         return err;
     }

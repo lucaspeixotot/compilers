@@ -41,8 +41,8 @@ const char ERs[][STR_REGEX_LENGTH] = {
     "start",
     "([0-9])+\\.([0-9])*",
     "[0-9]+",
-    "\"([A-Za-z]|[0-9]|\\s|!|#|\\$|%|&|\\”|\\(|\\)|\\*|\\+|\\,|\\-|\\.|\\/"
-    "|:|;|<|=|>|\\?|@|[|]|\\^|_|\\‘|\\{|\\||}|\\∼)*\"",
+    "\"([A-Za-z]|[0-9]|\\s|\\!|\\#|\\$|\\%|\\&|\\”|\\(|\\)|\\*|\\+|\\,|\\-|\\.|\\/"
+    "|\\:|\\;|\\<|\\=|\\>|\\?|\\@|\\[|\\]|\\^|_|\\‘|\\{|\\||}|\\∼)*\"",
     "\"([A-Za-z]|[0-9]|\\s|!|#|\\$|%|&|\\”|\\(|\\)|\\*|\\+|\\,|\\-|\\.|\\/"
     "|:|;|<|=|>|\\?|@|[|]|\\^|_|\\‘|\\{|\\||}|\\∼)\"",
     "(true|false)",
@@ -52,6 +52,7 @@ const char ERs[][STR_REGEX_LENGTH] = {
     "\\*",
     "\\=\\=",
     "\\!\\=",
+    "<<",
     "<=",
     "<",
     ">=",
@@ -59,7 +60,6 @@ const char ERs[][STR_REGEX_LENGTH] = {
     "\\|\\|",
     "\\&\\&",
     "\\!",
-    "<<",
     "\\(",
     "\\)",
     "\\[",
@@ -108,6 +108,7 @@ const char cat_to_value[][CATEGORY_LENGTH_VALUE] = {"INT_TYPE",
                                                     "OP_MULT",
                                                     "OP_EQUAL",
                                                     "OP_DIFF",
+                                                    "OP_CONCAT",
                                                     "OP_LEQ",
                                                     "OP_LESS",
                                                     "OP_GEQ",
@@ -115,7 +116,6 @@ const char cat_to_value[][CATEGORY_LENGTH_VALUE] = {"INT_TYPE",
                                                     "OP_OR",
                                                     "OP_AND",
                                                     "OP_NOT",
-                                                    "OP_CONCAT",
                                                     "OPEN_PAREN",
                                                     "CLOSE_PAREN",
                                                     "OPEN_BRACKETS",
@@ -166,6 +166,7 @@ int scanner_init(char *filename)
     scanner.filename = filename;
     scanner.fptr     = fopen(filename, "r");
     if (scanner.fptr == NULL) {
+        printf("Error opening file named %s\n", filename);
         return -EINVAL;
     }
 
