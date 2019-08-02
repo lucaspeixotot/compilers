@@ -981,39 +981,45 @@ sobrecarregadas e não podem ser genéricos.
 \label{sec:fibonacci}
 
 \begin{lstlisting}[label=code:fibonacci,caption=Programa Fibonacci]
-  defun start()(int) {
-    defint n;
+defun fibo(int max)() {
+    defint next;
+    defint c 1;
     defint first 0;
     defint second 1;
-    defint next;
-    defint c;
 
-    echo "Digite o numero de termos da sequencia";
-    read (n);
+    echo "0";
+    
+    while (true) {
+        if (c <= 1) {
+            set next c;
+        }
+        else {
+            set next (first + second);
+            set first second;
+            set second next;
+        }
 
-    echo "Os primeiros %d termos de fibonacci sao:" (n);
-
-    while (c < n) {
-      if (c <= 1) {
-        set next c;
-      }
-      else {
-        set next (first + second);
-        set first second;
-        set second next;
-      }
-
-      if (c == n-1) {
-        echo next;
-      }
-      else {
-        echo next << ", ";
-      }
-
-      set c c+1;
+        if (next <= max) {
+            echo ", " << next;
+        }
+        else {
+             break;
+        }
+        
+        set c c+1;
     }
+}
+
+defun start()(int) {
+    defint n;
+
+    echo "Digite o valor limite da serie de fibonacci";
+    read(n);
+
+    fibo(n);
+
     return 0;
-  }
+}
 \end{lstlisting}
 
 \section{Shell sort}

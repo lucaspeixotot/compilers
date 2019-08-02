@@ -16,8 +16,11 @@ defun fibo(int max)() {
             set second next;
         }
 
-        if (c <= max) {
+        if (next <= max) {
             echo ", " << next;
+        }
+        else {
+             break;
         }
         
         set c c+1;
