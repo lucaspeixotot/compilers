@@ -1139,82 +1139,6 @@ As \textbf{tabelas} \ref{tab:cat-desc1} e \ref{tab:cat-desc2}
 contém as descrições das categorias dos tokens mostrados no
 \textbf{código} \ref{code:enums-C}.
 
-\begin{table}[H]
-  \centering
-\begin{tabular}{|l|l|}
-\hline
-Categoria simbólica & Descrição    \\ \hline
-INT\_TYPE           & Tipo inteiro \\
-CHAR\_TYPE          & Tipo char    \\
-STRING\_TYPE          &   Tipo string  \\
-BOOL\_TYPE          &   Tipo booleano  \\
-FLOAT\_TYPE          &   Tipo ponto flutuante  \\
-FORMAT\_FIELD          &   Operador limitador de quantidade de campos  \\
-FORMAT\_DECIMAL          &   Operador limitador de casas decimais  \\
-DEFUN          &   Marcador de declaração de função  \\
-DEFINT          &   Marcador de declaração de inteiro  \\
-DEFCHAR          &   Marcador de declaração de char  \\
-DEFFLOAT          &   Marcador de declaração de ponto flutuante  \\
-DEFBOOL           & Marcador de declaração de booleano \\
-DEFSTRING           & Marcador de declaração de string \\
-IF           & Condicional se \\
-ELSE           & Condicional else \\
-FOR           & Iterador for \\
-WHILE           & Iterador while \\
-ECHO           & Saída \\
-RETURN           & Retorno de função \\
-BREAK           & Desvio incondicional break \\
-CONTINUE           & Desvio incondicional continue \\
-NIL           & Nulo \\
-SET           & Função de atribuição \\
-READ           & Entrada \\
-START           & Função principal \\
-CONST\_FLOAT           & Constante literal float \\
-CONST\_INT           & Constante literal inteira \\
-CONST\_STRING           & Constante literal string \\
-CONST\_CHAR           & Constante literal char \\
-CONST\_BOOL           & Constante literal booleana \\ \hline
-\end{tabular}
-\caption{Categorias e descrições}
-\label{tab:cat-desc1}
-\end{table}
-
-
-\begin{table}[H]
-  \centering
-\begin{tabular}{|l|l|}
-  \hline
-  Categoria simbólica & Descrição    \\ \hline
-OP\_MINUS           & Operador subtração ou unário negativo \\
-OP\_PLUS           & Operador adição \\
-OP\_DIVIDE           & Operador divisão \\
-OP\_MULT           & Operador multiplicação \\
-OP\_EQUAL           & Operador igualdade \\
-OP\_DIFF           & Operador diferença \\
-OP\_LEQ           & Operador menor igual que \\
-OP\_LESS           & Operador menor que \\
-OP\_GEQ           & Operador maior igual que \\
-OP\_GREATER           & Operador maior que \\
-OP\_OR           & Operador ou \\
-OP\_AND           & Operador and \\
-OP\_NOT           & Operador negação \\
-OP\_CONCAT           & Operador concatenação \\
-OPEN\_PAREN           & Abertura de parênteses  \\
-CLOSE\_PAREN           & Fechamento de parênteses \\
-OPEN\_BRACKETS           & Abertura de colchetes  \\
-CLOSE\_BRACKES           & Fechamento de colchetes \\
-OPEN\_KEYS           & Abertura de chaves  \\
-CLOSE\_KEYS           & Fechamento de chaves \\
-SEMICOLON           & Ponto e vírgula \\
-COMMA           & Vírgula \\
-VOID & Tipo void \\
-ID           & Identificador \\
-CAT\_EOF                    & Fim de arquivo             \\ \hline
-\end{tabular}
-\caption{Categorias e descrições}
-\label{tab:cat-desc2}
-\end{table}
-
 Na \textbf{tabela} \ref{tab:auxiliares} temos as expressões regulares
 auxiliares.
 
@@ -1231,7 +1155,84 @@ símbolo          & |'!'|'\#'|'\$'|'\%'|'\&'|'\textbackslash'|'''|'('|')'|'*'|'+
 \label{tab:auxiliares}
 \end{table}
 
-FALTANDO CATEGORIA E SUAS EXPRESSÕES REGULARES
+\begin{table}[H]
+  \centering
+\begin{tabularx}{16cm}{|X|X|X|}
+\hline
+Categoria simbólica & Descrição    \\ \hline
+INT\_TYPE           & Tipo inteiro & 'int' \\
+CHAR\_TYPE          & Tipo char   & 'char'  \\
+STRING\_TYPE          &   Tipo string & 'string'  \\
+BOOL\_TYPE          &   Tipo booleano & 'bool' \\
+FLOAT\_TYPE          &   Tipo ponto flutuante & 'float' \\
+FORMAT\_FIELD          &   Operador limitador de quantidade de campos
+& '\%' \\
+FORMAT\_DECIMAL          &   Operador limitador de casas decimais  &
+'\%\%' \\
+DEFUN          &   Marcador de declaração de função  & 'defun' \\
+DEFINT          &   Marcador de declaração de inteiro & 'defint'  \\
+DEFCHAR          &   Marcador de declaração de char & 'defchar'  \\
+DEFFLOAT          &   Marcador de declaração de ponto flutuante & 'deffloat' \\
+DEFBOOL           & Marcador de declaração de booleano & 'defbool' \\
+DEFSTRING           & Marcador de declaração de string & 'defstring' \\
+IF           & Condicional se & 'if' \\
+ELSE           & Condicional else & 'else' \\
+FOR           & Iterador for & 'for' \\
+WHILE           & Iterador while & 'while' \\
+ECHO           & Saída & 'echo' \\
+RETURN           & Retorno de função & 'return' \\
+BREAK           & Desvio incondicional break & 'break' \\
+CONTINUE           & Desvio incondicional continue & 'continue' \\
+NIL           & Nulo & 'nil' \\
+SET           & Função de atribuição & 'set' \\
+READ           & Entrada & 'read' \\
+START           & Função principal & 'start' \\
+CONST\_FLOAT           & Constante literal float & [digito]+'.'[digito]*\\
+CONST\_INT           & Constante literal inteira & [digito]+ \\
+CONST\_STRING           & Constante literal string & '"'(letra|digito|simbolo)*'"'\\
+CONST\_CHAR           & Constante literal char &
+'"'(letra|digito|simbolo)'"' \\
+CONST\_BOOL           & Constante literal booleana & 'true'|'false \\ \hline
+\end{tabularx}
+\caption{Categorias e descrições}
+\label{tab:cat-desc1}
+\end{table}
+
+
+\begin{table}[H]
+  \centering
+\begin{tabular}{|l|l|l|}
+  \hline
+  Categoria simbólica & Descrição  & Expressão regular  \\ \hline
+OP\_MINUS           & Operador subtração ou unário negativo & '-' \\
+OP\_PLUS           & Operador adição & '+' \\
+OP\_DIVIDE           & Operador divisão & '/' \\
+OP\_MULT           & Operador multiplicação & '*' \\
+OP\_EQUAL           & Operador igualdade & '==' \\
+OP\_DIFF           & Operador diferença & '!=' \\
+OP\_LEQ           & Operador menor igual que & '<=' \\
+OP\_LESS           & Operador menor que & '<' \\
+OP\_GEQ           & Operador maior igual que & '>=' \\
+OP\_GREATER           & Operador maior que & '>' \\
+OP\_OR           & Operador ou & '||'\\
+OP\_AND           & Operador and & '\&\&'\\
+OP\_NOT           & Operador negação & '!' \\
+OP\_CONCAT           & Operador concatenação & '<<'\\
+OPEN\_PAREN           & Abertura de parênteses & '(' \\
+CLOSE\_PAREN           & Fechamento de parênteses & ')'\\
+OPEN\_BRACKETS           & Abertura de colchetes  & '['\\
+CLOSE\_BRACKES           & Fechamento de colchetes & ']'\\
+OPEN\_KEYS           & Abertura de chaves  & '\{' \\
+CLOSE\_KEYS           & Fechamento de chaves & '\}' \\
+SEMICOLON           & Ponto e vírgula & ';' \\
+COMMA           & Vírgula & ',' \\
+VOID & Tipo void & 'void'\\
+ID           & Identificador & [A-Za-z|\_)\textbackslash w*\\
+CAT\_EOF                    & Fim de arquivo     &        \\ \hline
+\end{tabular}
+\caption{Categorias e descrições}
+\label{tab:cat-desc2}
+\end{table}
 
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
