@@ -1,4 +1,0 @@
-defun start()(int) {
-  echo "Alo mundo";
-  return 0;
-}
