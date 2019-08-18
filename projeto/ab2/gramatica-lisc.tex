@@ -219,6 +219,30 @@ teremos também nesse documento as alterações necessárias na gramática
 para que a gramática se torne uma LL(1), pré-requisito obrigatório de
 todo analisador sintático preditivo recursivo.
 
+\chapter{Alteração nos tokens}
+\label{cha:alteracao-nos-tokens}
+
+A fim de diminuir e simplificar a gramática, foi decidido agrupar
+alguns tokens, gerando assim novos tokens e eliminando os antigos.
+O agrupamento pode ser melhor visualizado na \textbf{tabela}
+\ref{tab:agrupamento}.
+
+\begin{table}[H]
+  \centering
+\begin{tabularx}{16cm}{|X|X|X|}
+\hline
+Novo token & Relação com tokens eliminados & Expressão regular    \\ \hline
+OP\_ADI & OP\_PLUS | OP\_MINUS & '-' | '+' \\ \hline
+OP\_RELACIONAL & OP\_EQUAL | OP\_DIFF | OP\_LEQ | OP\_LESS | OP\_GEQ |
+OP\_GREATER & '==' | '!=' | '<=' | '<' | '>=' | '>' \\ \hline
+OP\_LOGIC & OP\_OR | OP\_AND & '\&\&' | '||' \\ \hline
+OP\_MULT\_DIV & OP\_MULT | OP\_DIVIDE & '*' | '/' \\ \hline
+OP\_FORMAT & FORMAT\_FIELD | FORMAT\_DECIMAL & '\%' | '\%\%' \\ \hline
+\end{tabularx}
+\caption{Agrupamento para a criação de novos tokens.}
+\label{tab:agrupamento}
+\end{table}
+
 
 \chapter{Gramática Original}
 \label{cha:gramatica-original}
