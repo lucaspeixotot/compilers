@@ -1,4 +1,3 @@
-
 \documentclass[
   % -- opções da classe memoir --
   12pt,				% tamanho da fonte
@@ -449,7 +448,7 @@ específico dentro do arranjo pode ser feito a partir do
 \begin{lstlisting}[label=code:acesso,caption=Acessando elemento dentro
     de um arranjo unidimensional]
   defint numeros[5] {1,2,3,4,5}
-  echo ("acessando indice %d do arranjo numeros, valor: %d") (2, numeros[1]) 
+  echo ("acessando indice %d do arranjo numeros, valor: %d") (2, numeros[1]);
 \end{lstlisting}
 
 
@@ -661,7 +660,7 @@ envolvendo concatenação em LisC, onde o operador de concatenação é o
   defstring nome "Asnestro"
   defstring frase ("Tenho um cachorro chamado " << nome << ", ele tem "
   << idade << " anos e mede " << tamanho << "cm");
-  echo frase;
+  echo ("%s") (frase);
   \\ a saida desse codigo e "Tenho um cachorro chamado Asnestro, ele
   tem 5 anos e mede 30.0cm"
 \end{lstlisting}
@@ -772,8 +771,8 @@ instrução pode ser utilizada.
 
 \begin{lstlisting}[label=code:echo,caption=Exemplo de código da
   instrução echo]
-  // echo <texto formatado> <variaveis a serem substituidas no texto
-  formatado>
+  // echo (<texto formatado>) (<variaveis a serem substituidas no texto
+  formatado>)
   defint a 5;
   defint b 6;
   
@@ -801,17 +800,17 @@ para ver se o código entrará no bloco do \emph{if} ou do \emph{else}.
   defbool cond2 false;
 
   if (cond) {
-    echo "Cond e verdadeira";
+    echo ("Cond e verdadeira");
   }
   else {
-    echo "Cond e falsa";    
+    echo ("Cond e falsa");    
   }
 
   if (cond2) {
-    echo "Cond2 e verdadeira";        
+    echo ("Cond2 e verdadeira");        
   }
   else {
-    echo "Cond2 e falsa";        
+    echo ("Cond2 e falsa");        
   }
 
   // a saida desse codigo seria "cond e verdadeira" no primeiro if
@@ -858,7 +857,7 @@ através das palavras reservadas \emph{while} e \emph{for}, respectivamente.
   defint count;
 
   for (count, 0, 10, 1) {
-    echo count;
+    echo ("%d\n") (count);
   }
 \end{lstlisting}
 
@@ -891,7 +890,7 @@ podemos visualizar essas instruções atuando.
       break;
     }
 
-    echo count << "\n";
+    echo (count << "\n");
   }
 
   // esse codigo tras como saida
@@ -925,7 +924,7 @@ detalhado.
   }
 
   defun start ()(int) {
-    echo plus5(num);
+    echo ("%d\n") (plus5(num));
 
     return 0;
   }
@@ -972,7 +971,7 @@ sobrecarregadas e não podem ser genéricos.
 
 \begin{lstlisting}[label=code:alo-mundo,caption=Programa Alô mundo]
   defun start()(int) {
-    echo "Alo mundo";
+    echo ("Alo mundo");
     return 0;
   }
 \end{lstlisting}
@@ -987,7 +986,7 @@ defun fibo(int max)() {
     defint first 0;
     defint second 1;
 
-    echo "0";
+    echo ("0");
     
     while (true) {
         if (c <= 1) {
@@ -1000,7 +999,7 @@ defun fibo(int max)() {
         }
 
         if (next <= max) {
-            echo ", " << next;
+            echo (", " << next);
         }
         else {
              break;
@@ -1013,7 +1012,7 @@ defun fibo(int max)() {
 defun start()(int) {
     defint n;
 
-    echo "Digite o valor limite da serie de fibonacci";
+    echo ("Digite o valor limite da serie de fibonacci");
     read(n);
 
     fibo(n);
@@ -1057,7 +1056,7 @@ defun start()(int) {
     shell_sort(ar, n);
 
     for(i, 0, n) {
-      echo ar[i];
+      echo ("%d\n") (ar[i]);
     }
   }
 

@@ -1,0 +1,510 @@
+
+\documentclass[
+  % -- opções da classe memoir --
+  12pt,				% tamanho da fonte
+  % openright,			% capítulos começam em pág ímpar (insere página vazia caso preciso)
+  oneside,			% para impressão somente frente. Oposto a twoside (frente e verso)
+  a4paper,			% tamanho do papel. 
+  % -- opções da classe abntex2 --
+  %chapter=TITLE,		% títulos de capítulos convertidos em letras maiúsculas
+  %section=TITLE,		% títulos de seções convertidos em letras maiúsculas
+  %subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
+  %subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
+  % -- opções do pacote babel --
+  english,			% idioma adicional para hifenização
+  french,				% idioma adicional para hifenização
+  spanish,			% idioma adicional para hifenização
+  brazil,				% o último idioma é o principal do documento
+]{abntex2}
+
+
+% ---
+% PACOTES
+% ---
+
+% ---
+% Pacotes fundamentais 
+% ---
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{lmodern}			% Usa a fonte Latin Modern
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{float}
+
+% ---
+
+% ---
+% Pacotes adicionais, usados no anexo do modelo de folha de identificação
+% ---
+\usepackage{multicol}
+\usepackage{array}
+\usepackage{tabu}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{hyperref}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{codered}{rgb}{0.960,0,0.054}
+\definecolor{codeblue}{rgb}{0, 0.141, 0.960}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{codeblue},
+    numberstyle=\tiny\color{codepurple},
+    stringstyle=\color{codemagenta},
+    basicstyle=\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    alsoletter={'},
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=4
+}
+
+\lstset{style=mystyle,frame=tb, morekeywords={defun, int, defint, echo, return, deffloat, defbool,
+    defchar, if, else, set, string, defstring, read, while, for,
+    break, continue, nil}}
+
+\renewcommand{\lstlistingname}{Código}% Listing -> Algorithm
+% ---
+	
+% ---
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+% ---
+\usepackage{lipsum}				% para geração de dummy text
+% ---
+
+% ---
+% Pacotes de citações
+% ---
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage{tabularx}
+
+
+% --- 
+% CONFIGURAÇÕES DE PACOTES
+% --- 
+
+% ---
+% Configurações do pacote backref
+% Usado sem a opção hyperpageref de backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+% Texto padrão antes do número das páginas
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+  \ifcase #1 %
+  Nenhuma citação no texto.%
+  \or
+  Citado na página #2.%
+  \else
+  Citado #1 vezes nas páginas #2.%
+  \fi}%
+% ---
+
+% ---
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% ---
+\titulo{Especificação da gramática da linguagem de programação LisC}
+\autor{Lucas Peixoto de Almeida Cavalcante}
+\local{Brasil}
+\data{Maceió/Al\\2019.1}
+\instituicao{%
+  Universidade Federal de Alagoas
+  \par
+  Instituto de Computação
+}
+\tipotrabalho{Relatório técnico}
+\preambulo{Especificação da gramática da linguagem de programação LisC, definida
+  pelo aluno, para a disciplina de Compiladores, correspondente à
+  parte da avaliação da AB2 do semestre de 2019.1, sob orientação do
+  \textbf{Prof. Alcino Dall Igna Jr.}}
+% ---
+
+% ---
+% Configurações de aparência do PDF final
+
+% alterando o aspecto da cor azul
+\definecolor{blue}{RGB}{41,5,195}
+
+% informações do PDF
+\makeatletter
+\hypersetup{
+  %pagebackref=true,
+  pdftitle={\@title}, 
+  pdfauthor={\@author},
+  pdfsubject={\imprimirpreambulo},
+  pdfcreator={LaTeX with abnTeX2},
+  pdfkeywords={abnt}{latex}{abntex}{abntex2}{relatório técnico}, 
+  colorlinks=true,       		% false: boxed links; true: colored links
+  linkcolor=blue,          	% color of internal links
+  citecolor=blue,        		% color of links to bibliography
+  filecolor=magenta,      		% color of file links
+  urlcolor=blue,
+  bookmarksdepth=4
+}
+\makeatother
+% --- 
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+
+% O tamanho do parágrafo é dado por:
+\setlength{\parindent}{1.3cm}
+
+% Controle do espaçamento entre um parágrafo e outro:
+\setlength{\parskip}{0.2cm}  % tente também \onelineskip
+
+% ---
+% compila o indice
+% ---
+\makeindex
+% ---
+
+% ----
+% Início do documento
+% ----
+\begin{document}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+% \pretextual
+
+% ---
+% Capa
+% ---
+%% \imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% inserir o sumario
+% ---
+
+\tableofcontents*
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS  (necessário para incluir número nas páginas)
+% ----------------------------------------------------------
+\textual
+\chapter{Introdução}
+\label{cha:intro}
+Esse documento descreve a gramática construída da linguagem de
+programação LisC, que deverá ser respeitada na implementação do
+analisador sintático em C. O analisador sintático escolhido é o
+preditivo recursivo. Diante da escolha deste analisador sintático,
+teremos também nesse documento as alterações necessárias na gramática
+para que a gramática se torne uma LL(1), pré-requisito obrigatório de
+todo analisador sintático preditivo recursivo.
+
+
+\chapter{Gramática Original}
+\label{cha:gramatica-original}
+O \textbf{código} \ref{code:gramatica-original} apresenta a gramática
+original da linguagem.
+
+\begin{lstlisting}[label={code:gramatica-original},caption={Gramática
+    original da linguagem de programação LisC.},style={mystyle}]
+Programa = ListaDecl
+
+ListaDecl = ListaDecl Decl
+ListaDecl = Decl
+
+Decl = DeclVariaveis
+Decl = DeclFuncao
+
+DeclVariaveis = DefTipo ListaVariaveis ';'
+
+DefTipo = 'defint'
+DefTipo = 'defbool'
+DefTipo = 'defchar'
+DefTipo = 'defstring'
+DefTipo = 'deffloat'
+
+ListaVariaveis = ListaVariaveis ',' Variavel
+ListaVariaveis = Variavel
+
+Variavel = 'id'
+Variavel = 'id' ExpConcat
+
+DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
+
+ListaParam = ListaParam ',' Param
+ListaParam = Param
+
+Param = Tipo 'id'
+
+TipoReturn = 'void'
+TipoReturn = Tipo
+
+ListaSent = ListaSent Sent
+ListaSent = Sent
+
+Sent = DeclVariaveis
+Sent = Comando
+
+Comando = Continue
+Comando = Break
+Comando = Atribuicao
+Comando = ChamadaFunc
+Comando = Return
+Comando = Read
+Comando = Echo
+Comando = If
+Comando = For
+Comando = While
+
+Continue = 'continue' ';'
+
+Break = 'break' ';'
+
+Atribuicao = 'set' 'id' ExpConcat ';'
+
+ChamadaFunc = 'id' '(' ListaArg ')' ';'
+
+Return = 'return' ExpConcat ';'
+
+Read = 'read' '(' ListaArg ')' ';'
+
+Echo = 'echo' '(' ExpConcat ')'
+Echo = 'echo' '(' ExpConcat ')' '(' ListaArg ')'
+
+If = 'if' '(' ExpBooleana ')' '{' ListaSent '}' Else
+
+Else = 'else' '{' ListaSent '}'
+Else = epsilon
+
+For = 'for' '(' 'id' ',' ExpAritmetica ',' ExpAritmetica ForPasso ')' '{' ListaSent '}'
+
+While = 'while' '(' ExpBooleana ')' '{' ListaSent '}'
+
+ForPasso = ',' ExpAritmetica
+ForPasso = epsilon
+
+ListaArg = ListaArg ',' 'id'
+ListaArg = 'id'
+
+Tipo = 'int'
+Tipo = 'char'
+Tipo = 'string'
+Tipo = 'float'
+Tipo = 'bool'
+
+ExpAritmetica = ExpAritmetica 'op_adi' TermAritmetico
+ExpAritmetica = TermAritmetico
+
+ExpBooleana = ExpBooleana 'op_logic' TermBooleano
+ExpBooleana = TermBooleano
+
+ExpConcat = ExpConcat '<<' ExpAritmetica
+ExpConcat = ExpBooleana
+
+TermBooleano = '!' TermBooleano
+TermBooleano = ExpAritmetica 'op_relacional' ExpAritmetica
+TermBooleano = ExpAritmetica
+
+TermAritmetico = TermAritmetico 'op_mult_div' TermFormatacao
+TermAritmetico = TermFormatacao
+
+TermFormatacao = TermFormatacao 'op_format' FatorAritmetico
+TermFormatacao = FatorAritmetico
+
+FatorAritmetico = '-' FatorAritmetico
+FatorAritmetico = 'id'
+FatorAritmetico = 'const_float'
+FatorAritmetico = 'const_char'
+FatorAritmetico = 'const_bool'
+FatorAritmetico = 'const_int'
+FatorAritmetico = 'const_string'
+FatorAritmetico = '(' ExpBooleana ')'
+
+\end{lstlisting}
+
+\chapter{Gramática LL(1)}
+\label{cha:gramatica-ll1}
+
+\begin{lstlisting}[label={code:gramatica-original},caption={Gramática
+    original da linguagem de programação LisC.},style={mystyle}]
+Programa = ListaDecl
+
+ListaDecl = Decl ListaDeclR
+
+ListaDeclR = Decl ListaDeclR
+ListaDeclR = epsilon
+
+Decl = DeclVariaveis
+Decl = DeclFuncao
+
+DeclVariaveis = DefTipo ListaVariaveis ';'
+
+DefTipo = 'defint'
+DefTipo = 'defbool'
+DefTipo = 'defchar'
+DefTipo = 'defstring'
+DefTipo = 'deffloat'
+
+ListaVariaveis = Variavel ListaVariaveisR
+
+ListaVariaveisR = ',' Variavel ListaVariaveisR
+ListaVariaveisR = epsilon
+
+Variavel = 'id' VariavelF
+
+VariavelF = ExpConcat
+VariavelF = epsilon
+
+DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
+
+ListaParam = Param ListaParamR
+
+ListaParamR = ',' Param ListaParamR
+ListaParamR = epsilon
+
+Param = Tipo 'id'
+
+TipoReturn = 'void'
+TipoReturn = Tipo
+
+ListaSent = Sent ListaSentR
+
+ListaSentR = Sent ListaSentR
+ListaSentR = epsilon
+
+Sent = DeclVariaveis
+Sent = Comando
+
+Comando = Continue
+Comando = Break
+Comando = Atribuicao
+Comando = ChamadaFunc
+Comando = Return
+Comando = Read
+Comando = Echo
+Comando = If
+Comando = For
+Comando = While
+
+Continue = 'continue' ';'
+
+Break = 'break' ';'
+
+Atribuicao = 'set' 'id' ExpConcat ';'
+
+ChamadaFunc = 'id' '(' ListaArg ')' ';'
+
+Return = 'return' ExpConcat ';'
+
+Read = 'read' '(' ListaArg ')' ';'
+
+Echo = 'echo' '(' ExpConcat ')' EchoF
+
+EchoF = '(' ListaArg ')' ';'
+EchoF = ';'
+
+If = 'if' '(' ExpBooleana ')' '{' ListaSent '}' Else
+
+Else = 'else' '{' ListaSent '}'
+Else = epsilon
+
+For = 'for' '(' 'id' ',' ExpAritmetica ',' ExpAritmetica ForPasso ')' '{' ListaSent '}'
+
+While = 'while' '(' ExpBooleana ')' '{' ListaSent '}'
+
+ForPasso = ',' ExpAritmetica
+ForPasso = epsilon
+
+ListaArg = 'id' ListaArgR
+
+ListaArgR = ',' 'id' ListaArgR
+ListaArgR = epsilon
+
+Tipo = 'int'
+Tipo = 'char'
+Tipo = 'string'
+Tipo = 'float'
+Tipo = 'bool'
+
+ExpAritmetica = TermAritmetico ExpAritmeticaR
+
+ExpAritmeticaR = 'op_adi' TermAritmetico ExpAritmeticaR
+ExpAritmeticaR = epsilon
+
+ExpBooleana = TermBooleano ExpBooleanaR
+
+ExpBooleanaR = 'op_logic' TermBooleano ExpBooleanaR
+ExpBooleanaR = epsilon
+
+ExpConcat = ExpBooleana ExpConcatR
+
+ExpConcatR = '<<' ExpAritmetica ExpConcatR
+ExpConcatR = epsilon
+
+TermBooleano = '!' TermBooleano
+TermBooleano = ExpAritmetica TermBooleanoF
+
+TermBooleanoF = 'op_relacional' ExpAritmetica
+TermBooleanoF = epsilon
+
+TermAritmetico = TermFormatacao TermAritmeticoR
+
+TermAritmeticoR = 'op_mult_div' TermFormatacao TermFormatacaoR
+TermAritmeticoR = epsilon
+
+TermFormatacao = FatorAritmetico TermFormatacaoR
+
+TermFormatacaoR = 'op_format' FatorAritmetico TermFormatacaoR
+TermFormatacaoR = epsilon
+
+FatorAritmetico = '-' FatorAritmetico
+FatorAritmetico = 'id'
+FatorAritmetico = 'const_float'
+FatorAritmetico = 'const_char'
+FatorAritmetico = 'const_bool'
+FatorAritmetico = 'const_int'
+FatorAritmetico = 'const_string'
+FatorAritmetico = '(' ExpBooleana ')'
+
+\end{lstlisting}
+
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+%---------------------------------------------------------------------
+% INDICE REMISSIVO
+%---------------------------------------------------------------------
+
+\printindex
+
+\end{document}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:
