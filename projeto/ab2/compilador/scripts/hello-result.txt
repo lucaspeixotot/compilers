@@ -1,0 +1,67 @@
+   1  defun start(void)(int) {
+          Programa = ListaDecl
+          ListaDecl = Decl ListaDeclR
+          Decl = DeclFuncao
+          DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ')' '{' ListaSent '}'
+              [0001, 0001] (0006,                DEFUN) {defun}
+              [0001, 0007] (0044,                   ID) {start}
+              [0001, 0012] (0035,           OPEN_PAREN) {(}
+          ListaParam = 'void'
+              [0001, 0013] (0043,                 VOID) {void}
+              [0001, 0017] (0036,          CLOSE_PAREN) {)}
+              [0001, 0018] (0035,           OPEN_PAREN) {(}
+          TipoReturn = Tipo
+          Tipo = 'int'
+              [0001, 0019] (0000,             INT_TYPE) {int}
+              [0001, 0022] (0036,          CLOSE_PAREN) {)}
+              [0001, 0024] (0039,            OPEN_KEYS) {{}
+   2    echo ("Alo mundo");
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = Echo
+          Echo = 'echo' '(' ExpConcat ')' EchoF
+              [0002, 0003] (0016,                 ECHO) {echo}
+              [0002, 0008] (0035,           OPEN_PAREN) {(}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_string'
+              [0002, 0009] (0026,         CONST_STRING) {"Alo mundo"}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0002, 0020] (0036,          CLOSE_PAREN) {)}
+          EchoF = ';'
+              [0002, 0021] (0041,            SEMICOLON) {;}
+   3    return 0;
+          Sent = Comando
+          Comando = Return
+          Return = 'return' ExpConcat ';'
+              [0003, 0003] (0017,               RETURN) {return}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0003, 0010] (0025,            CONST_INT) {0}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0003, 0011] (0041,            SEMICOLON) {;}
+   4  }
+          ListaSentR = epsilon
+              [0004, 0001] (0040,           CLOSE_KEYS) {}}
+              [0004, 0002] (0045,              CAT_EOF) {}
+          ListaDeclR = epsilon
+The file was analyzed!

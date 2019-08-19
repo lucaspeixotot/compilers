@@ -1,0 +1,526 @@
+   1  defun fibo(int max)(void) {
+          Programa = ListaDecl
+          ListaDecl = Decl ListaDeclR
+          Decl = DeclFuncao
+          DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ')' '{' ListaSent '}'
+              [0001, 0001] (0006,                DEFUN) {defun}
+              [0001, 0007] (0044,                   ID) {fibo}
+              [0001, 0011] (0035,           OPEN_PAREN) {(}
+          ListaParam = Param ListaParamR
+          Param = Tipo 'id' ParamF
+          Tipo = 'int'
+              [0001, 0012] (0000,             INT_TYPE) {int}
+              [0001, 0016] (0044,                   ID) {max}
+          ParamF = epsilon
+          ListaParamR = epsilon
+              [0001, 0019] (0036,          CLOSE_PAREN) {)}
+              [0001, 0020] (0035,           OPEN_PAREN) {(}
+          TipoReturn = 'void'
+              [0001, 0021] (0043,                 VOID) {void}
+              [0001, 0025] (0036,          CLOSE_PAREN) {)}
+              [0001, 0027] (0039,            OPEN_KEYS) {{}
+   2      defint next;
+          ListaSent = Sent ListaSentR
+          Sent = DeclVariaveis
+          DeclVariaveis = DefTipo ListaVariaveis ';'
+          DefTipo = 'defint'
+              [0002, 0005] (0007,               DEFINT) {defint}
+          ListaVariaveis = Variável ListaVariaveisR
+          Variavel = 'id' VariavelF
+              [0002, 0012] (0044,                   ID) {next}
+          VariavelF = epsilon
+          ListaVariaveisR = epsilon
+              [0002, 0016] (0041,            SEMICOLON) {;}
+   3      defint c 1;
+          Sent = DeclVariaveis
+          DeclVariaveis = DefTipo ListaVariaveis ';'
+          DefTipo = 'defint'
+              [0003, 0005] (0007,               DEFINT) {defint}
+          ListaVariaveis = Variável ListaVariaveisR
+          Variavel = 'id' VariavelF
+              [0003, 0012] (0044,                   ID) {c}
+          VariavelF = ExpConcat
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0003, 0014] (0025,            CONST_INT) {1}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+          ListaVariaveisR = epsilon
+              [0003, 0015] (0041,            SEMICOLON) {;}
+   4      defint first 0;
+          Sent = DeclVariaveis
+          DeclVariaveis = DefTipo ListaVariaveis ';'
+          DefTipo = 'defint'
+              [0004, 0005] (0007,               DEFINT) {defint}
+          ListaVariaveis = Variável ListaVariaveisR
+          Variavel = 'id' VariavelF
+              [0004, 0012] (0044,                   ID) {first}
+          VariavelF = ExpConcat
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0004, 0018] (0025,            CONST_INT) {0}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+          ListaVariaveisR = epsilon
+              [0004, 0019] (0041,            SEMICOLON) {;}
+   5      defint second 1;
+          Sent = DeclVariaveis
+          DeclVariaveis = DefTipo ListaVariaveis ';'
+          DefTipo = 'defint'
+              [0005, 0005] (0007,               DEFINT) {defint}
+          ListaVariaveis = Variável ListaVariaveisR
+          Variavel = 'id' VariavelF
+              [0005, 0012] (0044,                   ID) {second}
+          VariavelF = ExpConcat
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0005, 0019] (0025,            CONST_INT) {1}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+          ListaVariaveisR = epsilon
+              [0005, 0020] (0041,            SEMICOLON) {;}
+   7      echo ("0");
+          Sent = Comando
+          Comando = Echo
+          Echo = 'echo' '(' ExpConcat ')' EchoF
+              [0007, 0005] (0016,                 ECHO) {echo}
+              [0007, 0010] (0035,           OPEN_PAREN) {(}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_string'
+              [0007, 0011] (0026,         CONST_STRING) {"0"}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0007, 0014] (0036,          CLOSE_PAREN) {)}
+          EchoF = ';'
+              [0007, 0015] (0041,            SEMICOLON) {;}
+   9      while (true) {
+          Sent = Comando
+          Comando = While
+          While = 'while' '(' ExpBooleana ')' '{' ListaSent '}'
+              [0009, 0005] (0015,                WHILE) {while}
+              [0009, 0011] (0035,           OPEN_PAREN) {(}
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_bool'
+              [0009, 0012] (0028,           CONST_BOOL) {true}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+              [0009, 0016] (0036,          CLOSE_PAREN) {)}
+              [0009, 0018] (0039,            OPEN_KEYS) {{}
+  10          if (c <= 1) {
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = If
+          If = 'if' '(' ExpBooleana ')' '{' ListaSent '}' Else
+              [0010, 0009] (0012,                   IF) {if}
+              [0010, 0012] (0035,           OPEN_PAREN) {(}
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0010, 0013] (0044,                   ID) {c}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = 'op_relacional' ExpAritmetica
+              [0010, 0015] (0032,        OP_RELACIONAL) {<=}
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0010, 0018] (0025,            CONST_INT) {1}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          ExpBooleanaR = epsilon
+              [0010, 0019] (0036,          CLOSE_PAREN) {)}
+              [0010, 0021] (0039,            OPEN_KEYS) {{}
+  11              set next c;
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = Atribuicao
+          Atribuicao = 'set' 'id' AtribuicaoF
+              [0011, 0013] (0021,                  SET) {set}
+              [0011, 0017] (0044,                   ID) {next}
+          AtribuicaoF = ExpConcat ';'
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0011, 0022] (0044,                   ID) {c}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0011, 0023] (0041,            SEMICOLON) {;}
+  12          }
+          ListaSentR = epsilon
+              [0012, 0009] (0040,           CLOSE_KEYS) {}}
+  13          else {
+          Else = 'else' '{' ListaSent '}'
+              [0013, 0009] (0013,                 ELSE) {else}
+              [0013, 0014] (0039,            OPEN_KEYS) {{}
+  14              set next (first + second);
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = Atribuicao
+          Atribuicao = 'set' 'id' AtribuicaoF
+              [0014, 0013] (0021,                  SET) {set}
+              [0014, 0017] (0044,                   ID) {next}
+          AtribuicaoF = ExpConcat ';'
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = '(' ExpBooleana ')'
+              [0014, 0022] (0035,           OPEN_PAREN) {(}
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0014, 0023] (0044,                   ID) {first}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = 'op_adi' TermAritmetico ExpAritmeticaR
+              [0014, 0029] (0029,               OP_ADI) {+}
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0014, 0031] (0044,                   ID) {second}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+              [0014, 0037] (0036,          CLOSE_PAREN) {)}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0014, 0038] (0041,            SEMICOLON) {;}
+  15              set first second;
+          Sent = Comando
+          Comando = Atribuicao
+          Atribuicao = 'set' 'id' AtribuicaoF
+              [0015, 0013] (0021,                  SET) {set}
+              [0015, 0017] (0044,                   ID) {first}
+          AtribuicaoF = ExpConcat ';'
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0015, 0023] (0044,                   ID) {second}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0015, 0029] (0041,            SEMICOLON) {;}
+  16              set second next;
+          Sent = Comando
+          Comando = Atribuicao
+          Atribuicao = 'set' 'id' AtribuicaoF
+              [0016, 0013] (0021,                  SET) {set}
+              [0016, 0017] (0044,                   ID) {second}
+          AtribuicaoF = ExpConcat ';'
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0016, 0024] (0044,                   ID) {next}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0016, 0028] (0041,            SEMICOLON) {;}
+  17          }
+          ListaSentR = epsilon
+              [0017, 0009] (0040,           CLOSE_KEYS) {}}
+  19          if (next <= max) {
+          Sent = Comando
+          Comando = If
+          If = 'if' '(' ExpBooleana ')' '{' ListaSent '}' Else
+              [0019, 0009] (0012,                   IF) {if}
+              [0019, 0012] (0035,           OPEN_PAREN) {(}
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0019, 0013] (0044,                   ID) {next}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = 'op_relacional' ExpAritmetica
+              [0019, 0018] (0032,        OP_RELACIONAL) {<=}
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0019, 0021] (0044,                   ID) {max}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          ExpBooleanaR = epsilon
+              [0019, 0024] (0036,          CLOSE_PAREN) {)}
+              [0019, 0026] (0039,            OPEN_KEYS) {{}
+  20              echo (", " << next);
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = Echo
+          Echo = 'echo' '(' ExpConcat ')' EchoF
+              [0020, 0013] (0016,                 ECHO) {echo}
+              [0020, 0018] (0035,           OPEN_PAREN) {(}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_string'
+              [0020, 0019] (0026,         CONST_STRING) {", "}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = '<<' ExpAritmetica ExpConcatR
+              [0020, 0024] (0031,            OP_CONCAT) {<<}
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0020, 0027] (0044,                   ID) {next}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          ExpConcatR = epsilon
+              [0020, 0031] (0036,          CLOSE_PAREN) {)}
+          EchoF = ';'
+              [0020, 0032] (0041,            SEMICOLON) {;}
+  21          }
+          ListaSentR = epsilon
+              [0021, 0009] (0040,           CLOSE_KEYS) {}}
+  22          else {
+          Else = 'else' '{' ListaSent '}'
+              [0022, 0009] (0013,                 ELSE) {else}
+              [0022, 0014] (0039,            OPEN_KEYS) {{}
+  23               break;
+          ListaSent = Sent ListaSentR
+          Sent = Comando
+          Comando = Break
+          Break = 'break' ';'              [0023, 0014] (0018,                BREAK) {break}
+              [0023, 0019] (0041,            SEMICOLON) {;}
+  24          }
+          ListaSentR = epsilon
+              [0024, 0009] (0040,           CLOSE_KEYS) {}}
+  26          set c c+1;
+          Sent = Comando
+          Comando = Atribuicao
+          Atribuicao = 'set' 'id' AtribuicaoF
+              [0026, 0009] (0021,                  SET) {set}
+              [0026, 0013] (0044,                   ID) {c}
+          AtribuicaoF = ExpConcat ';'
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'id' FatorAritmeticoF
+              [0026, 0015] (0044,                   ID) {c}
+          FatorAritmeticoF = epsilon
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = 'op_adi' TermAritmetico ExpAritmeticaR
+              [0026, 0016] (0029,               OP_ADI) {+}
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0026, 0017] (0025,            CONST_INT) {1}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0026, 0018] (0041,            SEMICOLON) {;}
+  27      }
+          ListaSentR = epsilon
+              [0027, 0005] (0040,           CLOSE_KEYS) {}}
+  28  }
+          ListaSentR = epsilon
+              [0028, 0001] (0040,           CLOSE_KEYS) {}}
+  30  defun start(void)(int) {
+          ListaDeclR = Decl ListaDeclR
+          Decl = DeclFuncao
+          DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ')' '{' ListaSent '}'
+              [0030, 0001] (0006,                DEFUN) {defun}
+              [0030, 0007] (0044,                   ID) {start}
+              [0030, 0012] (0035,           OPEN_PAREN) {(}
+          ListaParam = 'void'
+              [0030, 0013] (0043,                 VOID) {void}
+              [0030, 0017] (0036,          CLOSE_PAREN) {)}
+              [0030, 0018] (0035,           OPEN_PAREN) {(}
+          TipoReturn = Tipo
+          Tipo = 'int'
+              [0030, 0019] (0000,             INT_TYPE) {int}
+              [0030, 0022] (0036,          CLOSE_PAREN) {)}
+              [0030, 0024] (0039,            OPEN_KEYS) {{}
+  31      defint n;
+          ListaSent = Sent ListaSentR
+          Sent = DeclVariaveis
+          DeclVariaveis = DefTipo ListaVariaveis ';'
+          DefTipo = 'defint'
+              [0031, 0005] (0007,               DEFINT) {defint}
+          ListaVariaveis = Variável ListaVariaveisR
+          Variavel = 'id' VariavelF
+              [0031, 0012] (0044,                   ID) {n}
+          VariavelF = epsilon
+          ListaVariaveisR = epsilon
+              [0031, 0013] (0041,            SEMICOLON) {;}
+  33      echo ("Digite o valor limite da serie de fibonacci");
+          Sent = Comando
+          Comando = Echo
+          Echo = 'echo' '(' ExpConcat ')' EchoF
+              [0033, 0005] (0016,                 ECHO) {echo}
+              [0033, 0010] (0035,           OPEN_PAREN) {(}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_string'
+              [0033, 0011] (0026,         CONST_STRING) {"Digite o valor limite da serie de fibonacci"}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0033, 0056] (0036,          CLOSE_PAREN) {)}
+          EchoF = ';'
+              [0033, 0057] (0041,            SEMICOLON) {;}
+  34      read(n);
+          Sent = Comando
+          Comando = Read
+          Read = 'read' '(' ListaArg ')' ';'
+              [0034, 0005] (0022,                 READ) {read}
+              [0034, 0009] (0035,           OPEN_PAREN) {(}
+          ListaArg = 'id' ListaArgR
+              [0034, 0010] (0044,                   ID) {n}
+          ListaArgR = epsilon
+              [0034, 0011] (0036,          CLOSE_PAREN) {)}
+              [0034, 0012] (0041,            SEMICOLON) {;}
+  36      fibo(n);
+          Sent = Comando
+          Comando = ChamadaFunc
+          ChamadaFunc = 'id' '(' ListaArg ')' ';'
+              [0036, 0005] (0044,                   ID) {fibo}
+              [0036, 0009] (0035,           OPEN_PAREN) {(}
+          ListaArg = 'id' ListaArgR
+              [0036, 0010] (0044,                   ID) {n}
+          ListaArgR = epsilon
+              [0036, 0011] (0036,          CLOSE_PAREN) {)}
+              [0036, 0012] (0041,            SEMICOLON) {;}
+  38      return 0;
+          Sent = Comando
+          Comando = Return
+          Return = 'return' ExpConcat ';'
+              [0038, 0005] (0017,               RETURN) {return}
+          ExpConcat = ExpBooleana ExpConcatR
+          ExpBooleana = TermBooleano ExpBooleanaR
+          TermBooleano = ExpAritmetica TermBooleanoF
+          ExpAritmetica = TermAritmetico ExpAritmeticaR
+          TermAritmetico = TermFormatacao TermAritmeticoR
+          TermFormatacao = FatorAritmetico TermFormatacaoR
+          FatorAritmetico = 'const_int'
+              [0038, 0012] (0025,            CONST_INT) {0}
+          TermFormatacaoR = epsilon
+          TermAritmeticoR = epsilon
+          ExpAritmeticaR = epsilon
+          TermBooleanoF = epsilon
+          ExpBooleanaR = epsilon
+          ExpConcatR = epsilon
+              [0038, 0013] (0041,            SEMICOLON) {;}
+  39  }
+          ListaSentR = epsilon
+              [0039, 0001] (0040,           CLOSE_KEYS) {}}
+              [0039, 0002] (0045,              CAT_EOF) {}
+          ListaDeclR = epsilon
+The file was analyzed!

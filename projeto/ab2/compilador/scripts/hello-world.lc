@@ -1,0 +1,4 @@
+defun start(void)(int) {
+  echo ("Alo mundo");
+  return 0;
+}

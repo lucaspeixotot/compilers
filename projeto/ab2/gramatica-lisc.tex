@@ -272,13 +272,35 @@ ListaVariaveis = Variavel
 
 Variavel = 'id'
 Variavel = 'id' ExpConcat
+Variavel = 'id' '[' ExpConcat ']'
+Variavel = 'id' '[' ExpConcat ']' '{' ListaUni '}'
+
+ListaUni = 'const_string'
+ListaUni = ListaInt
+ListaUni = ListaChar
+ListaUni = ListaBool
+ListaUni = ListaFloat
+
+ListaInt = ListaInt ',' 'const_int'
+ListaInt = 'const_int'
+
+ListaChar = ListaChar ',' 'const_char'
+ListaChar = 'const_char'
+
+ListaBool = ListaBool ',' 'const_bool'
+ListaBool = 'const_bool'
+
+ListaFloat = ListaFloat ',' 'const_float'
+ListaFloat = 'const_float'
 
 DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
 
 ListaParam = ListaParam ',' Param
 ListaParam = Param
+ListaParam = 'void'
 
 Param = Tipo 'id'
+Param = Tipo 'id' '[' ']'
 
 TipoReturn = 'void'
 TipoReturn = Tipo
@@ -305,6 +327,7 @@ Continue = 'continue' ';'
 Break = 'break' ';'
 
 Atribuicao = 'set' 'id' ExpConcat ';'
+Atribuicao = 'set' 'id' '[' ExpConcat ']' ExpConcat ';'
 
 ChamadaFunc = 'id' '(' ListaArg ')' ';'
 
@@ -312,8 +335,8 @@ Return = 'return' ExpConcat ';'
 
 Read = 'read' '(' ListaArg ')' ';'
 
-Echo = 'echo' '(' ExpConcat ')'
-Echo = 'echo' '(' ExpConcat ')' '(' ListaArg ')'
+Echo = 'echo' '(' ExpConcat ')' ';'
+Echo = 'echo' '(' ExpConcat ')' '(' ListaArg ')' ';'
 
 If = 'if' '(' ExpBooleana ')' '{' ListaSent '}' Else
 
@@ -356,13 +379,16 @@ TermFormatacao = TermFormatacao 'op_format' FatorAritmetico
 TermFormatacao = FatorAritmetico
 
 FatorAritmetico = '-' FatorAritmetico
-FatorAritmetico = 'id'
 FatorAritmetico = 'const_float'
 FatorAritmetico = 'const_char'
 FatorAritmetico = 'const_bool'
 FatorAritmetico = 'const_int'
 FatorAritmetico = 'const_string'
 FatorAritmetico = '(' ExpBooleana ')'
+FatorAritmetico = 'id'
+FatorAritmetico = 'id' '(' ListaArg ')'
+FatorAritmetico = 'id' '[' ExpAritmetica ']'
+
 
 \end{lstlisting}
 
@@ -398,15 +424,49 @@ Variavel = 'id' VariavelF
 
 VariavelF = ExpConcat
 VariavelF = epsilon
+VariavelF = '[' ExpConcat ']' VariavelFF
+
+VariavelFF = '{' ListaUni '}'
+VariavelFF = epsilon
+
+ListaUni = 'const_string'
+ListaUni = ListaInt
+ListaUni = ListaChar
+ListaUni = ListaBool
+ListaUni = ListaFloat
+
+ListaInt = 'const_int' ListaIntR
+
+ListaIntR = ',' 'const_int' ListaIntR
+ListaIntR = epsilon
+
+ListaChar = 'const_char' ListaCharR
+
+ListaCharR = ',' 'const_char' ListaCharR
+ListaCharR = epsilon
+
+ListaBool = 'const_bool' ListaBoolR
+
+ListaBoolR = ',' 'const_bool' ListaBoolR
+ListaBoolR = epsilon
+
+ListaFloat = 'const_float' ListaFloatR
+
+ListaFloatR = ',' 'const_float' ListaFloatR
+ListaFloatR = epsilon
 
 DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
 
 ListaParam = Param ListaParamR
+ListaParam = 'void'
 
 ListaParamR = ',' Param ListaParamR
 ListaParamR = epsilon
 
-Param = Tipo 'id'
+Param = Tipo 'id' ParamF
+
+ParamF = '[' ']'
+ParamF = epsilon
 
 TipoReturn = 'void'
 TipoReturn = Tipo
@@ -434,7 +494,10 @@ Continue = 'continue' ';'
 
 Break = 'break' ';'
 
-Atribuicao = 'set' 'id' ExpConcat ';'
+Atribuicao = 'set' 'id' AtribuicaoF
+
+AtribuicaoF = ExpConcat ';'
+AtribuicaoF = '[' ExpConcat ']' ExpConcat ';'
 
 ChamadaFunc = 'id' '(' ListaArg ')' ';'
 
@@ -502,13 +565,17 @@ TermFormatacaoR = 'op_format' FatorAritmetico TermFormatacaoR
 TermFormatacaoR = epsilon
 
 FatorAritmetico = '-' FatorAritmetico
-FatorAritmetico = 'id'
 FatorAritmetico = 'const_float'
 FatorAritmetico = 'const_char'
 FatorAritmetico = 'const_bool'
 FatorAritmetico = 'const_int'
 FatorAritmetico = 'const_string'
 FatorAritmetico = '(' ExpBooleana ')'
+FatorAritmetico = 'id' FatorAritmeticoF
+
+FatorAritmeticoF = '(' ListaArg ')'
+FatorAritmeticoF = '[' ExpAritmetica ']'
+FatorAritmeticoF = epsilon
 
 \end{lstlisting}
 

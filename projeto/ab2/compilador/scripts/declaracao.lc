@@ -1,0 +1,4 @@
+defint age 15;
+deffloat lado, area_quadrado , area_triangulo;
+defbool x (area_quadrado > area_triangulo)
+defbool res !x;

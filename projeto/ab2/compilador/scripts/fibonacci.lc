@@ -1,0 +1,39 @@
+defun fibo(int max)(void) {
+    defint next;
+    defint c 1;
+    defint first 0;
+    defint second 1;
+
+    echo ("0");
+    
+    while (true) {
+        if (c <= 1) {
+            set next c;
+        }
+        else {
+            set next (first + second);
+            set first second;
+            set second next;
+        }
+
+        if (next <= max) {
+            echo (", " << next);
+        }
+        else {
+             break;
+        }
+        
+        set c c+1;
+    }
+}
+
+defun start(void)(int) {
+    defint n;
+
+    echo ("Digite o valor limite da serie de fibonacci");
+    read(n);
+
+    fibo(n);
+
+    return 0;
+}

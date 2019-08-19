@@ -1,0 +1,5 @@
+a 5.2 b d
+e e e e "ola %d = 15"/
+*==<
+
+c c c c
