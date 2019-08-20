@@ -416,193 +416,27 @@ static int exp_concat_handler(void)
     return 0;
 }
 
-static int lista_int_R_handler(void)
+static int lista_uni_R_handler(void)
 {
     int err = 0;
 
     if (tk.cat == COMMA) {
-        printf("          ListaIntR = ',' 'const_int' ListaIntR\n");
+        printf("          ListaUniR = ',' ExpConcat ListaUniR\n");
         PRINT_TOKEN(tk);
         NEXT_TOKEN(tk);
 
-        if (tk.cat == CONST_INT) {
-            PRINT_TOKEN(tk);
-            NEXT_TOKEN(tk);
-
-            err = lista_int_R_handler();
-            if (err) {
-                return err;
-            }
-        } else {
-            printf("Esperado uma constante inteira\n");
-            return -SYNTAX_ERROR;
-        }
-    } else {
-        printf("          ListaIntR = epsilon\n");
-    }
-
-    return 0;
-}
-
-static int lista_int_handler(void)
-{
-    int err = 0;
-    printf("          ListaInt = 'const_int' ListaIntR\n");
-    if (tk.cat == CONST_INT) {
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        err = lista_int_R_handler();
+        err = exp_concat_handler();
         if (err) {
             return err;
         }
-    } else {
-        printf("Esperado uma constante inteira\n");
-        return -SYNTAX_ERROR;
-    }
 
-    return 0;
-}
-
-static int lista_char_R_handler(void)
-{
-    int err = 0;
-
-    if (tk.cat == COMMA) {
-        printf("          ListaCharR = ',' 'const_char' ListaCharR\n");
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        if (tk.cat == CONST_CHAR) {
-            PRINT_TOKEN(tk);
-            NEXT_TOKEN(tk);
-
-            err = lista_char_R_handler();
-            if (err) {
-                return err;
-            }
-        } else {
-            printf("Esperado uma constante char\n");
-            return -SYNTAX_ERROR;
-        }
-    } else {
-        printf("          ListaCharR = epsilon\n");
-    }
-
-    return 0;
-}
-
-static int lista_char_handler(void)
-{
-    int err = 0;
-    printf("          ListaChar = 'const_char' ListaCharR\n");
-    if (tk.cat == CONST_CHAR) {
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        err = lista_char_R_handler();
+        err = lista_uni_R_handler();
         if (err) {
             return err;
         }
+
     } else {
-        printf("Esperado uma constante char\n");
-        return -SYNTAX_ERROR;
-    }
-
-    return 0;
-}
-
-static int lista_bool_R_handler(void)
-{
-    int err = 0;
-
-    if (tk.cat == COMMA) {
-        printf("          ListaBoolR = ',' 'const_bool' ListaBoolR\n");
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        if (tk.cat == CONST_BOOL) {
-            PRINT_TOKEN(tk);
-            NEXT_TOKEN(tk);
-
-            err = lista_bool_R_handler();
-            if (err) {
-                return err;
-            }
-        } else {
-            printf("Esperado uma constante booleana\n");
-            return -SYNTAX_ERROR;
-        }
-    } else {
-        printf("          ListaBoolR = epsilon\n");
-    }
-
-    return 0;
-}
-
-static int lista_bool_handler(void)
-{
-    int err = 0;
-    printf("          ListaBool = 'const_bool' ListaBoolR\n");
-    if (tk.cat == CONST_BOOL) {
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        err = lista_bool_R_handler();
-        if (err) {
-            return err;
-        }
-    } else {
-        printf("Esperado uma constante booleana\n");
-        return -SYNTAX_ERROR;
-    }
-
-    return 0;
-}
-
-static int lista_float_R_handler(void)
-{
-    int err = 0;
-
-    if (tk.cat == COMMA) {
-        printf("          ListaFloatR = ',' 'const_float' ListaFloatR\n");
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        if (tk.cat == CONST_FLOAT) {
-            PRINT_TOKEN(tk);
-            NEXT_TOKEN(tk);
-
-            err = lista_float_R_handler();
-            if (err) {
-                return err;
-            }
-        } else {
-            printf("Esperado uma constante float\n");
-            return -SYNTAX_ERROR;
-        }
-    } else {
-        printf("          ListaFloatR = epsilon\n");
-    }
-
-    return 0;
-}
-
-static int lista_float_handler(void)
-{
-    int err = 0;
-    printf("          ListaFloat = 'const_float' ListaFloatR\n");
-    if (tk.cat == CONST_FLOAT) {
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-
-        err = lista_float_R_handler();
-        if (err) {
-            return err;
-        }
-    } else {
-        printf("Esperado uma constante float\n");
-        return -SYNTAX_ERROR;
+        printf("          ListaUniR = epsilon\n");
     }
 
     return 0;
@@ -611,44 +445,16 @@ static int lista_float_handler(void)
 static int lista_uni_handler(void)
 {
     int err = 0;
+    printf("          ListaUni = ExpConcat ListaUniR\n");
 
-    switch (tk.cat) {
-    case CONST_INT:
-        printf("          ListaUni = ListaInt\n");
-        err = lista_int_handler();
-        if (err) {
-            return err;
-        }
-        break;
-    case CONST_BOOL:
-        printf("          ListaUni = ListaBool\n");
-        err = lista_bool_handler();
-        if (err) {
-            return err;
-        }
-        break;
-    case CONST_CHAR:
-        printf("          ListaUni = ListaChar\n");
-        err = lista_char_handler();
-        if (err) {
-            return err;
-        }
-        break;
-    case CONST_FLOAT:
-        printf("          ListaUni = ListaFloat\n");
-        err = lista_float_handler();
-        if (err) {
-            return err;
-        }
-        break;
-    case CONST_STRING:
-        printf("          ListaUni = 'const_string'\n");
-        PRINT_TOKEN(tk);
-        NEXT_TOKEN(tk);
-        break;
-    default:
-        printf("Esperado alguma constante\n");
-        return -SYNTAX_ERROR;
+    err = exp_concat_handler();
+    if (err) {
+        return err;
+    }
+
+    err = lista_uni_R_handler();
+    if (err) {
+        return err;
     }
 
     return 0;
@@ -1854,5 +1660,10 @@ static int programa_handler(void)
 int parser_run(void)
 {
     NEXT_TOKEN(tk);
-    return programa_handler();
+    int err = programa_handler();
+    if (tk.cat != CAT_EOF) {
+        printf("A análise terminou pela falta de uma declaração\n");
+    }
+
+    return err;
 }

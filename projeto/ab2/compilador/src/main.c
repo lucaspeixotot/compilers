@@ -10,7 +10,7 @@ int main(int argc, char **argv)
     int rc  = 0;
 
     if (argc != 2) {
-        printf("Expected just one argument!!\n");
+        printf("Esperado apenas um argumento!!\n");
         return 1;
     }
 
@@ -22,10 +22,10 @@ int main(int argc, char **argv)
 
     err = parser_run();
     if (err) {
-        printf("Error parsing the file!! (err %d)\n", err);
+        printf("Erro ao fazer a análise sintática do arquivo!! (err %d)\n", err);
+    } else {
+        printf("Arquivo analisado sintaticamente com sucesso!!\n");
     }
-
-    printf("The file was analyzed!\n");
 
     err = scanner_finish();
     if (err) {

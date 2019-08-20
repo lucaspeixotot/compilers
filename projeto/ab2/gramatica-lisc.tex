@@ -275,23 +275,8 @@ Variavel = 'id' ExpConcat
 Variavel = 'id' '[' ExpConcat ']'
 Variavel = 'id' '[' ExpConcat ']' '{' ListaUni '}'
 
-ListaUni = 'const_string'
-ListaUni = ListaInt
-ListaUni = ListaChar
-ListaUni = ListaBool
-ListaUni = ListaFloat
-
-ListaInt = ListaInt ',' 'const_int'
-ListaInt = 'const_int'
-
-ListaChar = ListaChar ',' 'const_char'
-ListaChar = 'const_char'
-
-ListaBool = ListaBool ',' 'const_bool'
-ListaBool = 'const_bool'
-
-ListaFloat = ListaFloat ',' 'const_float'
-ListaFloat = 'const_float'
+ListaUni = ListaUni ',' ExpConcat
+ListaUni = ExpConcat
 
 DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
 
@@ -429,31 +414,10 @@ VariavelF = '[' ExpConcat ']' VariavelFF
 VariavelFF = '{' ListaUni '}'
 VariavelFF = epsilon
 
-ListaUni = 'const_string'
-ListaUni = ListaInt
-ListaUni = ListaChar
-ListaUni = ListaBool
-ListaUni = ListaFloat
+ListaUni = ExpConcat ListaUniR
 
-ListaInt = 'const_int' ListaIntR
-
-ListaIntR = ',' 'const_int' ListaIntR
-ListaIntR = epsilon
-
-ListaChar = 'const_char' ListaCharR
-
-ListaCharR = ',' 'const_char' ListaCharR
-ListaCharR = epsilon
-
-ListaBool = 'const_bool' ListaBoolR
-
-ListaBoolR = ',' 'const_bool' ListaBoolR
-ListaBoolR = epsilon
-
-ListaFloat = 'const_float' ListaFloatR
-
-ListaFloatR = ',' 'const_float' ListaFloatR
-ListaFloatR = epsilon
+ListaUniR = ',' ExpConcat ListaUniR
+ListaUniR = epsilon
 
 DeclFuncao = 'defun' 'id' '(' ListaParam ')' '(' TipoReturn ') '{' ListaSent '}'
 

@@ -222,9 +222,9 @@ dos analisadore léxico e sintático, que serão desenvolvidas
 posteriormente no decorrer da disciplina. Ambos os analisadores serão
 implementados na linguagem de programação C. A linguagem permitirá ser
 analisada em passo único, com o analisador léxico funcionando
-on-the-fly a medida que o analisador sintático requisita novos
-tokens. Ao fim deste documento também existirá uma seção reservada
-para a especificação dos tokens da linguagem.
+\textit{on-the-fly} a medida que o analisador sintático requisita novos
+\textit{tokens}. Ao fim deste documento também existirá uma seção reservada
+para a especificação dos \textit{tokens} da linguagem.
 
 
 
@@ -403,7 +403,10 @@ tipo. A palavra reservada que representa esse tipo de variável é a palavra \te
 
 As contantes literais do tipo de variável caractere estão contidas no
 pintervalo de [0, 127]. Temos como exemplo os seguintes valores: "a",
-"b", "c".
+"b", "c". Além disso, nesse tipo de variável existem alguns caracteres
+especiais estão incluidos na linguagem, como por exemplo o caractere
+\textbackslash n e o \textbackslash r que
+correspondem ao valor $0x0A$ e $0x0D$, respectivamente, na tabela ASCII.
 
 \section{Estrutura de dados}
 \label{sec:estrutura-de-dados}
@@ -466,7 +469,7 @@ no momento da definição.
 \begin{lstlisting}[label=code:string,caption=Declaração de variáveis
     do tipo cadeia de caractere.]
   defstring palavra[10];
-  defstring texto[] = "Saudosa maloca";
+  defstring texto[15] = { "Saudosa maloca" };
 \end{lstlisting}
 
 Note que na variável \emph{texto} o tamanho alocado para ela foi de
@@ -657,10 +660,11 @@ envolvendo concatenação em LisC, onde o operador de concatenação é o
 \begin{lstlisting}[label=code:concat,caption=Exemplo de expressões de concatenação]
   defint idade 5;
   deffloat tamanho 30.0;
-  defstring nome "Asnestro"
-  defstring frase ("Tenho um cachorro chamado " << nome << ", ele tem "
-  << idade << " anos e mede " << tamanho << "cm");
+  defstring nome[30] { "Asnestro" };
+  defstring frase[50] { ("Tenho um cachorro chamado ") << (nome) << (", ele tem ")
+  << (idade) << (" anos e mede ") << (tamanho) << ("cm") } ;
   echo ("%s") (frase);
+  
   \\ a saida desse codigo e "Tenho um cachorro chamado Asnestro, ele
   tem 5 anos e mede 30.0cm"
 \end{lstlisting}
@@ -680,13 +684,13 @@ exemplos do uso do operador de formatação.
   // <variavel>%<numero de campos>
   // <variavel>%%<numero de casas decimais>
   defint time 1551;
-  defint hora time\%2;
+  defint hora time%2;
   deffloat pi 3.14159265359;
-  deffloat pi-formatado pi%%2;
+  deffloat pi_formatado pi%%2;
 \end{lstlisting}
 
 Note que a variável \emph{hora} é uma variável inteira e a variável
-\emph{pi-formatado} é uma variável de ponto flutuante. O resultado de uma
+\emph{pi\_formatado} é uma variável de ponto flutuante. O resultado de uma
 operação de formatação tem sempre como resultado uma variável do tipo
 do elemento a esquerda que foi utilizado
 
@@ -846,7 +850,7 @@ através das palavras reservadas \emph{while} e \emph{for}, respectivamente.
   defint a 1;
 
   while (a > 0) {
-    read a;
+    read (a);
   }
 
 \end{lstlisting}
@@ -970,17 +974,17 @@ sobrecarregadas e não podem ser genéricos.
 \label{sec:alo-mundo}
 
 \begin{lstlisting}[label=code:alo-mundo,caption=Programa Alô mundo]
-  defun start()(int) {
-    echo ("Alo mundo");
-    return 0;
-  }
+defun start(void)(int) {
+  echo ("Alo mundo");
+  return 0;
+}
 \end{lstlisting}
 
 \section{Fibonacci}
 \label{sec:fibonacci}
 
 \begin{lstlisting}[label=code:fibonacci,caption=Programa Fibonacci]
-defun fibo(int max)() {
+defun fibo(int max)(void) {
     defint next;
     defint c 1;
     defint first 0;
@@ -1009,7 +1013,7 @@ defun fibo(int max)() {
     }
 }
 
-defun start()(int) {
+defun start(void)(int) {
     defint n;
 
     echo ("Digite o valor limite da serie de fibonacci");
@@ -1018,7 +1022,7 @@ defun start()(int) {
     fibo(n);
 
     return 0;
-}
+}  
 \end{lstlisting}
 
 \section{Shell sort}
@@ -1026,54 +1030,53 @@ defun start()(int) {
 
 \begin{lstlisting}[label=code:shell-sort,caption=Programa do shell
   sort]
-  defun shell_sort(int ar[], int size)(void) {
+defun shell_sort(int ar[], int size)(void) {
     defint i, j, value;
     defint gap 1;
     
     while (gap < size) {
-      set gap 3*gap+1;
+        set gap 3*gap+1;
     }
 
     while (gap > 0) {
-      for(i, gap, size) {
-        set value ar[i];
-        set j i;
-        while (j > gap-1 && value <= ar[j - gap]) {
-          set ar[j] ar[j-gap];
-          set j j-gap;
+        for(i, gap, size) {
+            set value ar[i];
+            set j i;
+            while ((j > gap-1) && (value <= ar[j - gap])) {
+                set ar[j] ar[j-gap];
+                set j j-gap;
+            }
+            set ar[j] value;
         }
-        set ar[j] value;
-      }
-      set gap gap/3;
+        set gap gap/3;
     }
-  }
+}
 
-  defun start()(int) {
-    defint ar[] {12, 34, 54, 2, 3};
+defun start(void)(int) {
+    defint ar[5] {12, 34, 54, 2, 3};
     defint i;
     defint n 5;
 
     shell_sort(ar, n);
 
     for(i, 0, n) {
-      echo ("%d\n") (ar[i]);
+        echo (ar[i]);
     }
-  }
-
+}
 \end{lstlisting}
 
 
-\chapter{Especificação dos tokens}
+\chapter{Especificação dos \textit{tokens}}
 \label{cha:especificacao-dos-tokens}
 
-Nesse capítulo iremos falar sobre a especificação dos tokens da
+Nesse capítulo iremos falar sobre a especificação dos \textit{tokens} da
 linguagem LisC. Na \textbf{seção} \ref{cha:intro} já foi apresentado
 que a linguagem de programação escolhida para implementar o analisador
 léxico e sintático será em C.
 
 
 \begin{lstlisting}[label=code:enums-C,caption=Enumeração das
-    categorias dos tokens,language=C]
+    categorias dos \textit{tokens},language=C]
 /**
  * Enum for token category
  *
@@ -1141,7 +1144,7 @@ typedef enum cat cat_t;
 \end{lstlisting}
 
 As \textbf{tabelas} \ref{tab:cat-desc1} e \ref{tab:cat-desc2}
-contém as descrições das categorias dos tokens mostrados no
+contém as descrições das categorias dos \textit{tokens} mostrados no
 \textbf{código} \ref{code:enums-C}.
 
 Na \textbf{tabela} \ref{tab:auxiliares} temos as expressões regulares
