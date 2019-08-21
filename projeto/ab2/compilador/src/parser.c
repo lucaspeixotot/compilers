@@ -14,6 +14,7 @@
 token_t tk = {0};
 
 static int exp_booleana_handler(void);
+static int exp_concat_handler(void);
 static int lista_sent_handler(void);
 static int lista_arg_handler(void);
 static int exp_aritmetica_handler(void);
@@ -101,7 +102,7 @@ static int fator_aritmetico_handler(void)
 
     switch (tk.cat) {
     case OP_ADI:
-        printf("          FatorAritmetico = '-' FatorAritmetico\n");
+        printf("          FatorAritmetico = 'op_adi' FatorAritmetico\n");
         PRINT_TOKEN(tk);
         NEXT_TOKEN(tk);
         err = fator_aritmetico_handler();
@@ -145,10 +146,10 @@ static int fator_aritmetico_handler(void)
         NEXT_TOKEN(tk);
         break;
     case OPEN_PAREN:
-        printf("          FatorAritmetico = '(' ExpBooleana ')'\n");
+        printf("          FatorAritmetico = '(' ExpConcat ')'\n");
         PRINT_TOKEN(tk);
         NEXT_TOKEN(tk);
-        err = exp_booleana_handler();
+        err = exp_concat_handler();
         if (err) {
             return err;
         }
@@ -380,11 +381,11 @@ static int exp_concat_R_handler(void)
 {
     int err = 0;
     if (tk.cat == OP_CONCAT) {
-        printf("          ExpConcatR = '<<' ExpAritmetica ExpConcatR\n");
+        printf("          ExpConcatR = '<<' ExpBooleana ExpConcatR\n");
         PRINT_TOKEN(tk);
         NEXT_TOKEN(tk);
 
-        err = exp_aritmetica_handler();
+        err = exp_booleana_handler();
         if (err) {
             return err;
         }

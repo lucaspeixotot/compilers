@@ -344,18 +344,18 @@ Tipo = 'string'
 Tipo = 'float'
 Tipo = 'bool'
 
-ExpAritmetica = ExpAritmetica 'op_adi' TermAritmetico
-ExpAritmetica = TermAritmetico
+ExpConcat = ExpConcat '<<' ExpBooleana
+ExpConcat = ExpBooleana
 
 ExpBooleana = ExpBooleana 'op_logic' TermBooleano
 ExpBooleana = TermBooleano
 
-ExpConcat = ExpConcat '<<' ExpAritmetica
-ExpConcat = ExpBooleana
-
 TermBooleano = '!' TermBooleano
 TermBooleano = ExpAritmetica 'op_relacional' ExpAritmetica
 TermBooleano = ExpAritmetica
+
+ExpAritmetica = ExpAritmetica 'op_adi' TermAritmetico
+ExpAritmetica = TermAritmetico
 
 TermAritmetico = TermAritmetico 'op_mult_div' TermFormatacao
 TermAritmetico = TermFormatacao
@@ -363,17 +363,16 @@ TermAritmetico = TermFormatacao
 TermFormatacao = TermFormatacao 'op_format' FatorAritmetico
 TermFormatacao = FatorAritmetico
 
-FatorAritmetico = '-' FatorAritmetico
+FatorAritmetico = 'op_adi' FatorAritmetico
 FatorAritmetico = 'const_float'
 FatorAritmetico = 'const_char'
 FatorAritmetico = 'const_bool'
 FatorAritmetico = 'const_int'
 FatorAritmetico = 'const_string'
-FatorAritmetico = '(' ExpBooleana ')'
+FatorAritmetico = '(' ExpConcat ')'
 FatorAritmetico = 'id'
 FatorAritmetico = 'id' '(' ListaArg ')'
 FatorAritmetico = 'id' '[' ExpAritmetica ']'
-
 
 \end{lstlisting}
 
@@ -497,26 +496,26 @@ Tipo = 'string'
 Tipo = 'float'
 Tipo = 'bool'
 
-ExpAritmetica = TermAritmetico ExpAritmeticaR
+ExpConcat = ExpBooleana ExpConcatR
 
-ExpAritmeticaR = 'op_adi' TermAritmetico ExpAritmeticaR
-ExpAritmeticaR = epsilon
+ExpConcatR = '<<' ExpBooleana ExpConcatR
+ExpConcatR = epsilon
 
 ExpBooleana = TermBooleano ExpBooleanaR
 
 ExpBooleanaR = 'op_logic' TermBooleano ExpBooleanaR
 ExpBooleanaR = epsilon
 
-ExpConcat = ExpBooleana ExpConcatR
-
-ExpConcatR = '<<' ExpAritmetica ExpConcatR
-ExpConcatR = epsilon
-
 TermBooleano = '!' TermBooleano
 TermBooleano = ExpAritmetica TermBooleanoF
 
 TermBooleanoF = 'op_relacional' ExpAritmetica
 TermBooleanoF = epsilon
+
+ExpAritmetica = TermAritmetico ExpAritmeticaR
+
+ExpAritmeticaR = 'op_adi' TermAritmetico ExpAritmeticaR
+ExpAritmeticaR = epsilon
 
 TermAritmetico = TermFormatacao TermAritmeticoR
 
@@ -528,19 +527,18 @@ TermFormatacao = FatorAritmetico TermFormatacaoR
 TermFormatacaoR = 'op_format' FatorAritmetico TermFormatacaoR
 TermFormatacaoR = epsilon
 
-FatorAritmetico = '-' FatorAritmetico
+FatorAritmetico = 'op_adi' FatorAritmetico
 FatorAritmetico = 'const_float'
 FatorAritmetico = 'const_char'
 FatorAritmetico = 'const_bool'
 FatorAritmetico = 'const_int'
 FatorAritmetico = 'const_string'
-FatorAritmetico = '(' ExpBooleana ')'
+FatorAritmetico = '(' ExpConcat ')'
 FatorAritmetico = 'id' FatorAritmeticoF
 
 FatorAritmeticoF = '(' ListaArg ')'
 FatorAritmeticoF = '[' ExpAritmetica ']'
 FatorAritmeticoF = epsilon
-
 \end{lstlisting}
 
 
