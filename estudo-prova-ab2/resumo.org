@@ -1,3 +1,71 @@
+* Tradução dirigida por sintaxe (Capítulo 4)
+  Tradução dirigida por sintaxe é uma técnica que permite realizar
+  tradução (geração de código) concomitantemente com a análise
+  sintática via ações semânticas que são associadas as regras de
+  produção da gramática. A execução dessas ações pode gerar ou interpretar código,
+  armazenar informações na tabela de símbolos, emitir mensages de erro
+  e etc.
+
+  Os símbolos gramaticais passarão a conter atributos capazes de
+  armazenar valores durante o processo de reconhecimento. 
+
+** Esquemas de tradução
+   Um esquema de tradução é uma extensão de uma gramática livre de
+   contexto, extensão essa realizada através da associação de
+   atributos aos símbolos gramaticais e de ações semânticas as regras
+   de produção. Um atributo de um símbolo pode conter um valor
+   numérico, uma cadeia de caracteres, um tipo de dado, um endereço de
+   memória e etc. Ações semânticas podem ser avaliações de atributos
+   ou chamadas a procedimentos e funções. Com exceção dos atributos
+   dos terminais que são calculados pelo analisador léxico, os valores
+   dos demais atributos e variáveis são calculados durante a execução
+   das ações semânticas.
+
+   Atributos podem ser sintetizados ou herdados. Dado uma sentença de
+   entrada, a ela irá corresponder uma árvore de derivação, a qual
+   será construída durante o processo de análise. A execução das açõe
+   ssemânticas irá definir os valores dos atributos dos nós da árvore
+   para essa sentença de entrada. Deve ser observado que todas as
+   informações referentes a uma sentança estão contidas na sentença
+   original. Isto é, na sequencia de tokens da cadeia de entrada. Como
+   os tokens ficam nas folhas da árvore de derivação, isso significa
+   que todas as informações para um analisador estão originalmente
+   nessas folhas.
+
+   As regras semânticas computam valores de atributos a partir de
+   outros atributos e isso estabelece uma dependência entre as regras,
+   pois um atributo só pode ser calculado depois que todos os
+   atributos dos quais ele depende tiverem sido calculados. Portanto,
+   a ordem em que as regras de produção são usadas no processo de
+   reconhecimento pode não ser necessariamente a mesma ordem em que as
+   açõe ssemânticas correspondentes são executadas. A ordenação
+   correta para realizar os cálculos dos atributos é representada
+   através de um grafo dirigido, chamado de grafo de dependência. Esse
+   grafo determina uma sequência de avaliação (ou escalonamento) para
+   as regras semânticas.
+
+   Os esquemas S-atribuídos e os esquemas L-atribuídos possuem a
+   característica de executar os esquemas de traduções e suas ações
+   semânticas num único passo. A árvore de derivação que mostra os
+   valores dos atributos associados a cada nó é chamada de árvore de
+   derivação anotada.
+
+   Mesmo que o cálculo dos atributos de um símbolo possa variar em
+   fução da localização do símbolo na árvore, cada instanciaçao desse
+   símbolo terá sempre a mesma configuração (mesmo conjunto de
+   atributos). Isto é, o número de atributos e os seus tipos não
+   variam em função do ponto em que o símbolo aparece na árvore de
+   derivação.
+
+** Gramática de atributos
+   As ações semânticas podem produzir efeitos colaterais tais como
+   imprimir um valor, armazenar um literal em uma tabela ou em um
+   arquivo, atualizar uma variável global, etc. Quando o esquema de
+   tradução não produz efeitos colaterais, ele é dito ser uma
+   gramática de atributos. Nesse caso, as ações semânticas são
+   atribuições ou funções envolvendo unicamente os atributos do
+   esquema (não são usadas variáveis globais, arquivos, etc).
+
 * Geração de código intermediário (Capítulo 5)
   A geração de código intermediário é a transformação da árvore de
   derivação em um segmento de código. Esse código pode, eventualmente,
@@ -178,6 +246,8 @@
     disponível. Após gravar uma quadrupla, a função geraCod incrementa
     proxq.
 
+    *Exemplo:*
+
     Eb = Eb1 'ou' Tb {
         NTerm Eb;
         Eb.nome = geraTemp();
@@ -221,6 +291,63 @@
         Sent.cod = emiteRot(inicio) + Eb.cod + geraCod('==', Eb.nome, '0',
         fim) + LSent.cod + geraGT(inicio) + emiteRot(fim);
     }
+
+*** Representação por fluxo de controle
+    Este método traduz expressões lógicas para um código formado por
+    instruções *if* e *goto*. São gerados rótulos que serão atributes
+    chamados *true* e *false* para onde a execução deve ser
+    transferida em caso de avaliação verdadeira ou falsa.
+
+    *Exemplo:*
+
+    Sent = 'enquanto' Eb 'repita' LSent 'fim' {
+        NTBool Eb; Eb.true = geraRot(); Eb.false = Sent.prox;
+        NTSent LSent; LSent.prox = Sent.prox;
+        Sent.cod = emiteRot(LSent.prox) + Eb.cod + emiteRot(Eb.true) + LSent.cod + geraGT(LSent.prox);
+    }
+    
+    Sent = 'se' Eb 'entao' LSent Senao {
+        NTBool Eb; Eb.true = geraRot(); Eb.false = geraRot();
+        NTSent LSent; Lsent.prox = Sent.prox;
+        NTSent Senao; Senao.prox = Sent.prox;
+        Sent.cod = Eb.cod + emiteRot(Eb.true) + LSent.cod +
+        geraGT(LSent.prox) + emiteRot(Eb.false) + Senao.cod + geraGT(Senao.prox);
+    }
+    
+    Senao = 'senao' LSent 'fim' { 
+        NTSent LSent; LSent.prox = Senao.prox;
+        Senao.cod = Lsent.cod + geraGT(Lsent.prox);
+    }
+    Senao = 'fim' {
+        Senao.cod = "";
+    }
+
+    Eb = Eb1 'ou' Tb {
+        NTBool Eb1; Eb1.true = Eb.true; Eb1.false = geraRot();
+        NTBool Tb; Tb.true = Eb.true; Tb.false = Eb.false;
+        Eb.cod = Eb1.cod + emiteRot(Eb1.false) + Tb.cod;
+    }
+    Eb = Tb { NTBool Tb = Eb; }
+
+    Tb = Tb1 'e' Fb {
+        NTBool Tb1; Tb1.false = Tb.false; Tb1.true = geraRot();
+        NTBool Fb; Fb.false = Tb.false; Fb.true = Tb.true;
+        Tb.cod = Tb1.cod + emiteRot(Tb1.true) + Fb.cod;
+    }
+    Tb = Fb { NTBool Fb = Tb; }
+    
+    Fb = 'nao' Fb1 { 
+        NTBool Fb1; Fb1.true = Fb.false; Fb1.false = Fb.true; 
+        Fb.cod = Fb1.cod;
+    }
+    Fb = Ea1 'opr' Ea2 {
+        NTerm Ea1, Ea2;
+        Fb.cod = Ea1.cod + Ea2.cod + geraCod(opr.lex, Ea1.nome,
+        Ea2.nome, Fb.true) + geraGT(Fb.false);
+    }
+    Fb = 'true' { Fb.cod = geraGT(Fb.true); }
+    Fb = 'false' { Fb.cod = geraGT(Fb.falso); }
+    
 
 
      
