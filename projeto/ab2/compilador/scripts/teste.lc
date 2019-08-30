@@ -1,0 +1,9 @@
+defun start(void)(int) {
+      defbool b true;
+      defstring a[50] { ("a" << b || c) };
+
+      return 0;
+}
+
+
+

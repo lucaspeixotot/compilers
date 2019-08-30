@@ -108,8 +108,11 @@
 
 
 *** Funções auxiliares
+
     *ptr* geraFolha(Categ categ, String lexema) {...}
+
     *ptr* geraNo(String opr, ptr node) {...}
+
     *ptr* geraNo(String opr, ptr node1, ptr node2) {...}
 
     Nota que dentro dessas funções se faz necessário verificar se os
@@ -121,13 +124,21 @@
     sintaxe.
 
     S = Ea '=' { s.ptr = geraNo(atr.lex, Ea.ptr); }
+
     Ea = Ea1 'opa' Ta { Ea.ptr = geraNo(opa.lex, Ea1.ptr, Ta.ptr); }
+
     Ea = Ta { Ea.ptr = Ta.ptr; }
+
     Ta = Ta1 'opm' Fa { Ta.ptr = geraNo(opm.lex, Ta1.ptr, Fa.ptr); }
+
     Ta = Fa { Ta.ptr = Fa.ptr; }
+
     Fa = '(' Ea ')' { Fa.ptr = Ea.ptr; }
+
     Fa = 'cten' { Fa.ptr = geraFolha('cten', cten.lex); }
+
     Fa = 'id' { Fa.ptr = geraFolha('id', id.lex); }
+
 
 ** Notações pré e pós-fixadas
    Notações pré e pós-fixadas podem ser generalizadas para operadores
@@ -146,12 +157,19 @@
     pós-fixada.
 
     S = Ea '=' { print(Ea.cod); }
+
     Ea = Ea1 'opa' Ta { Ea.cod = Ea1.cod + Ta.cod + opa.lex; }
+
     Ea = Ta { Ea.cod = Ta.cod }
+
     Ta = Ta1 'opm' Fa { Ta.cod = Ta1.cod + Fa.cod + opm.lex; }
+
     Ta = Fa { Ta.cod = Fa.cod; }
+
     Fa = '(' Ea ')' { Fa.cod = Ea.cod; }
+
     Fa = 'cten' { Fa.cod = cten.lex; }
+
     Fa = 'id' { Fa.cod = id.lex; }
     
 ** Código de 3 endereços e quadras
@@ -166,51 +184,97 @@
 
 *** Funções auxiliares
     *String* geraTemp() {...}
+
     *String* geraRot() {...}
+
     *void* emiteRot() {...}
-    *String* geraCod(String operador, String operando1, String operando2, String destino) {...}
-    *String* geraCod(String operador, String operando, String destino) {...}
+
+    *String* geraCod(String operador, String operando1, String
+    operando2, String destino) {...}
+
+    *String* geraCod(String operador, String operando, String destino)
+    {...}
+
     *String* geraGt(String rotulo) {...}
+
 
 *** Exemplo
 
     S = 'id' '=' Ea {
+
         S.cod = Ea.cod + geraCod('=', Ea.nome, id.lex);
+
     }
+
     Ea = Ea1 'opa' Ta { 
+
         Ea.nome = geraTemp();
-        Ea.cod = Ea1.cod + Ta.cod + geraCod(opa.lex, Ea1.nome, Ta.nome,
+
+        Ea.cod = Ea1.cod + Ta.cod + geraCod(opa.lex, Ea1.nome,
+        Ta.nome,
+
         Ea.nome);
+
     }
+
     Ea = Ta { 
+
         Ea.nome = Ta.nome;
+
         Ea.cod = Ta.cod;
+
     }
+
     Ta = Ta1 'opm' Fa { 
+
         Ta.nome = geraTemp();
+
         Ta.cod = Ta1.code + Fa.cod + geraCod(opm.lex, Ta1.nome,
+
         Fa.nome, Ta.nome);
+
     }
+
     Ta = Fa {
+
         Ta.nome = Fa.nome;
+
         Ta.cod = Fa.cod;
+
     }
+
     Fa = '(' Ea ')' {
+
         Fa.nome = Ea.nome;
+
         Fa.cod = Ea.cod;
+
     }
+
     Fa = '-' Fa1 {
+
         Fa.nome = geraTemp();
+
         Fa.cod = Fa1.cod + geraCod("-u", Fa1.nome, Fa.nome);
+
     }
+
     Fa = 'cten' {
+
         Fa.nome = cten.lex;
+
         Fa.cod = "";
+
     }
+
     Fa = 'id' {
+
         Fa.nome = id.lex;
+
         Fa.cod = "";
+
     }
+
 
 ** Ações semânticas para construção de tabela de símbolos
    Esta seção apresenta esquemas de tradução que reconhecem
@@ -249,47 +313,85 @@
     *Exemplo:*
 
     Eb = Eb1 'ou' Tb {
+
         NTerm Eb;
+
         Eb.nome = geraTemp();
+
         Eb.cod = Eb1.cod + Tb.cod + geraCod('or', Eb1.nome, Tb.nome,
+
         Eb.nome);
+
     }
+
     Eb = Tb { NTerm Eb = Tb; }
+
     Tb = Tb1 'e' Fb {
+
         NTerm tb;
+
         tb.nome = geraTemp();
+
         tb.cod = Tb1.cod + Fb.cod + geraCod('e', Tb1.nome, Fb.nome,
+
             tb.nome);
+
     }
+
     Tb = Fb { NTerm Tb = Fb; }
+
     Fb = 'nao' Fb1 {
+
         NTerm Fb;
+
         Fb.nome = geraTemp();
+
         Fb.cod = Fb1.cod + geraCod('nao', Fb1.cod, Fb.nome);
+
     }
+
     Fb = '(' Eb ')' { NTerm Fb = Eb; }
+
     Fb = Ea1 'opr' Ea2 {
+
         NTerm Fb;
+
         Fb.nome = geraTemp();
-        Fb.cod = Ea1.cod + Ea2.cod + geraCod(opr.lex, Ea1.nome, Ea2.nome,
+
+        Fb.cod = Ea1.cod + Ea2.cod + geraCod(opr.lex, Ea1.nome,
+        Ea2.nome,
+
             geraRot(proxq+3)) + geraCod('=', '0', Fb.nome) +
+
             geraGT(geraRot(proxq+2)) + geraCod('=', '1', Fb.nome);
+
     }
+
     Fb = 'verd' { NTerm fb; fb.nome = geraTemp(); fb.cod =
+
         geraCod('=', '1', Fb.nome); 
+
     }
+
     Fb = 'falso' { NTerm fb; fb.nome = geraTemp(); fb.cod =
+
         geraCod('=', '0', Fb.nome);
+
     }
 
 
     Esquema de tradução para gramáticas com while
     
     Sent = 'enquanto' Eb 'faça' LSent 'fim' {
+
         String inicio = geraRot();
+
         String fim = geraRot();
+
         Sent.cod = emiteRot(inicio) + Eb.cod + geraCod('==', Eb.nome, '0',
+
         fim) + LSent.cod + geraGT(inicio) + emiteRot(fim);
+
     }
 
 *** Representação por fluxo de controle
@@ -301,55 +403,86 @@
     *Exemplo:*
 
     Sent = 'enquanto' Eb 'repita' LSent 'fim' {
+
         NTBool Eb; Eb.true = geraRot(); Eb.false = Sent.prox;
+
         NTSent LSent; LSent.prox = Sent.prox;
+
         Sent.cod = emiteRot(LSent.prox) + Eb.cod + emiteRot(Eb.true) + LSent.cod + geraGT(LSent.prox);
+
     }
     
     Sent = 'se' Eb 'entao' LSent Senao {
+
         NTBool Eb; Eb.true = geraRot(); Eb.false = geraRot();
+
         NTSent LSent; Lsent.prox = Sent.prox;
+
         NTSent Senao; Senao.prox = Sent.prox;
+
         Sent.cod = Eb.cod + emiteRot(Eb.true) + LSent.cod +
+
         geraGT(LSent.prox) + emiteRot(Eb.false) + Senao.cod + geraGT(Senao.prox);
+
     }
     
     Senao = 'senao' LSent 'fim' { 
+
         NTSent LSent; LSent.prox = Senao.prox;
+
         Senao.cod = Lsent.cod + geraGT(Lsent.prox);
+
     }
+
     Senao = 'fim' {
+
         Senao.cod = "";
+
     }
 
     Eb = Eb1 'ou' Tb {
+
         NTBool Eb1; Eb1.true = Eb.true; Eb1.false = geraRot();
+
         NTBool Tb; Tb.true = Eb.true; Tb.false = Eb.false;
+
         Eb.cod = Eb1.cod + emiteRot(Eb1.false) + Tb.cod;
+
     }
+
     Eb = Tb { NTBool Tb = Eb; }
 
     Tb = Tb1 'e' Fb {
+
         NTBool Tb1; Tb1.false = Tb.false; Tb1.true = geraRot();
+
         NTBool Fb; Fb.false = Tb.false; Fb.true = Tb.true;
+
         Tb.cod = Tb1.cod + emiteRot(Tb1.true) + Fb.cod;
+
     }
+
     Tb = Fb { NTBool Fb = Tb; }
+
     
     Fb = 'nao' Fb1 { 
+
         NTBool Fb1; Fb1.true = Fb.false; Fb1.false = Fb.true; 
+
         Fb.cod = Fb1.cod;
+
     }
+
     Fb = Ea1 'opr' Ea2 {
+
         NTerm Ea1, Ea2;
+
         Fb.cod = Ea1.cod + Ea2.cod + geraCod(opr.lex, Ea1.nome,
+
         Ea2.nome, Fb.true) + geraGT(Fb.false);
+
     }
+
     Fb = 'true' { Fb.cod = geraGT(Fb.true); }
+
     Fb = 'false' { Fb.cod = geraGT(Fb.falso); }
-    
-
-
-     
-
-   
